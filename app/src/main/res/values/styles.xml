@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="heading_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">20dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:textColor">@color/main_theme_color</item>
+        <item name="android:textSize">27sp</item>
+        <item name="fontFamily">@font/segoeui</item>
+    </style>
+
+    <style name="login_edit_tv">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">20dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:layout_marginEnd">40dp</item>
+        <item name="android:backgroundTint">@color/main_theme_color</item>
+        <item name="android:fontFamily">@font/segoeui</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="signup_edit_tv">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">40dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:layout_marginEnd">40dp</item>
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="android:fontFamily">@font/segoeui</item>
+        <item name="android:paddingBottom">20dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="action_btn_style">
+        <item name="android:layout_width">170dp</item>
+        <item name="android:layout_height">90dp</item>
+        <item name="android:layout_marginTop">30dp</item>
+        <item name="android:layout_marginEnd">40dp</item>
+        <item name="android:textAlignment">viewEnd</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/segoeui</item>
+        <item name="android:paddingEnd">30dp</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:textSize">35sp</item>
+        <item name="android:background">@drawable/login_text_bg</item>
+    </style>
+
+    <style name="navigation_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/segoeui</item>
+    </style>
+</resources>

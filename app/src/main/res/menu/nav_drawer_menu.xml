@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/miSavedBlog"
+        android:title="Saved Blogs"
+        android:icon="@drawable/bookmark"/>
+    <item
+        android:id="@+id/miYourProfile"
+        android:title="Profile"
+        android:icon="@drawable/profile"/>
+    <item
+        android:id="@+id/miLogOut"
+        android:title="Log out"
+        android:icon="@drawable/logout"/>
+
+</menu>

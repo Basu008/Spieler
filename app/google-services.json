@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "979159313003",
+    "project_id": "strange-d7f8d",
+    "storage_bucket": "strange-d7f8d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:979159313003:android:0e06f8e7d3dd3b40795f2e",
+        "android_client_info": {
+          "package_name": "com.example.spieler"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "979159313003-2tr51qho0bq39t654tm6cql8fgln6rjm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqbjXVSavHi2XGkIqsVjacIXk6wmbOrV4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "979159313003-2tr51qho0bq39t654tm6cql8fgln6rjm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
