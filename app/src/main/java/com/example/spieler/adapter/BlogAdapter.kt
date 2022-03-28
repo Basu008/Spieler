@@ -17,8 +17,8 @@ class BlogAdapter : ListAdapter<Blog, BlogAdapter.BlogViewHolder>(BlogDiffCallBa
             binding.blogBody.text = blog.description
             binding.blogHeading.text = blog.title
             binding.characterImage.setImageResource(R.drawable.korg)
-            binding.blogAuthor.text = "Basu Singh"
-            binding.blogDate.text = "15th Mar, 2022"
+            binding.blogAuthor.text = blog.author_info.first_name
+            binding.blogDate.text = blog.created_at
         }
 
         companion object {
