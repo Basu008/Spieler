@@ -10,10 +10,12 @@ import retrofit2.http.Path
 interface BlogApi {
     @GET("blogpages")
     suspend fun getAllBlogs(): Response<BlogResponseBody>
-//
-//    @GET("person")
-//    suspend fun getAllUsers(): Response<AllUser>
-//
+
+    @POST("blogpage")
+    suspend fun postBlog(
+        @Body postBlogBody: PostBlogBody
+    ): Response<PostBlogResponse>
+
     @POST("person")
     suspend fun registerUser(
         @Body signUpRequestBody: SignUpRequestBody

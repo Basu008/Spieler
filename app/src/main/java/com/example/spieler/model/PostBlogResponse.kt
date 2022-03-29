@@ -1,11 +1,9 @@
 package com.example.spieler.model
 
-import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class LoginResponseBody(
-
+data class PostBlogResponse(
     val status: Int,
     val message: String,
-    val content: LoginContentBody
+    val content: PostBlogResponseContent
 ): Serializable

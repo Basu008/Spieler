@@ -83,6 +83,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             if (response.isSuccessful){
                 Log.d("Login Status", "Successful")
                 val id = response?.body()?.content?.user_id ?: "None"
+                Toast.makeText(requireContext(), response.body()?.content?.token, Toast.LENGTH_SHORT).show()
                 if(id == "None"){
                     dialog.dismiss()
                     Toast.makeText(context, "Can't login, Try again later", Toast.LENGTH_SHORT).show()
@@ -92,13 +93,14 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     viewModel.userDetails.observe(viewLifecycleOwner){user ->
                         if (user != null){
                             editor.apply {
+                                putBoolean(Constants.USER_SESSION_ACTIVE, true)
                                 putString(Constants.USER_ID, id)
-                                putString(Constants.USER_FIRST_NAME, user.first_name)
                                 putString(Constants.USER_EMAIL, user.email)
-                                putString(Constants.USER_PROFILE_PIC, user.profile_img)
+                                putString(Constants.USER_PASSWORD, binding.loginPasswordTv.text.toString().trim())
                                 apply()
                             }
                             Intent(requireContext(), HomeActivity::class.java).also {
+                                it.putExtra(Constants.USER_DATA, user)
                                 startActivity(it)
                                 requireActivity().finish()
                                 dialog.dismiss()

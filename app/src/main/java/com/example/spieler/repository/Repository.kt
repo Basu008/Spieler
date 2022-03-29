@@ -10,11 +10,11 @@ class Repository {
     suspend fun getAllBlogs(): Response<BlogResponseBody>{
         return RetrofitInstance.api.getAllBlogs()
     }
-//
-//    suspend fun getAllUsers(): Response<AllUser>{
-//        return RetrofitInstance.api.getAllUsers()
-//    }
-//
+
+    suspend fun postBlog(postBlogBody: PostBlogBody): Response<PostBlogResponse>{
+        return RetrofitInstance.api.postBlog(postBlogBody)
+    }
+
     suspend fun registerUser(signUpRequestBody: SignUpRequestBody): Response<SignUpResponseBody>  {
         return RetrofitInstance.api.registerUser(signUpRequestBody)
     }

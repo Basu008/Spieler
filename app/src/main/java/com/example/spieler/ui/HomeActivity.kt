@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.example.spieler.R
 import com.example.spieler.adapter.BlogAdapter
 import com.example.spieler.databinding.ActivityHomeBinding
+import com.example.spieler.model.User
 import com.example.spieler.repository.Repository
 import com.example.spieler.util.Constants
 import com.example.spieler.viewmodel.HomeViewModel
@@ -45,10 +46,11 @@ class HomeActivity : AppCompatActivity() {
         sessionSharedPreferences = getSharedPreferences(Constants.USER_SESSION, Context.MODE_PRIVATE)
         editor = sessionSharedPreferences.edit()
 
-        val userId = sessionSharedPreferences.getString(Constants.USER_ID, "")
-        val username = sessionSharedPreferences.getString(Constants.USER_FIRST_NAME, "")
-        val email = sessionSharedPreferences.getString(Constants.USER_EMAIL, "")
-        val profilePic = sessionSharedPreferences.getString(Constants.USER_PROFILE_PIC, "defaultPic")
+        val user = intent.getSerializableExtra(Constants.USER_DATA) as User
+        val userId = user._id
+        val username = user.first_name
+        val email = user.email
+        val profilePic = user.profile_img
 
         //Update data to UI
         val headerLayout = binding.navView.getHeaderView(0)
@@ -57,18 +59,19 @@ class HomeActivity : AppCompatActivity() {
         val headerEmail: TextView = headerLayout.findViewById(R.id.email_navDrawer)
 
         Glide.with(this)
-            .load(profilePic?.toUri())
+            .load(profilePic.toUri())
             .circleCrop()
             .placeholder(R.drawable.user)
             .into(headerProfilePic)
-        headerUsername.text = username!!
-        headerEmail.text = email!!
+        headerUsername.text = username
+        headerEmail.text = email
 
         binding.homePageLayout.popularBlogShimmer.startShimmer()
         binding.homePageLayout.recentBlogsShimmer.startShimmer()
 
         binding.homePageLayout.addBlogBtn.setOnClickListener {
             Intent(this, AddBlogActivity::class.java).also {
+                it.putExtra(Constants.USER_DATA, user)
                 startActivity(it)
             }
         }
@@ -90,6 +93,8 @@ class HomeActivity : AppCompatActivity() {
                 R.id.miLogOut -> {
                     editor.apply {
                         remove(Constants.USER_ID)
+                        remove(Constants.USER_EMAIL)
+                        remove(Constants.USER_PASSWORD)
                         apply()
                     }
                     Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show()

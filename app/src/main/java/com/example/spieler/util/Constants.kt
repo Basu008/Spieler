@@ -2,6 +2,7 @@ package com.example.spieler.util
 
 class Constants {
     companion object{
+
         //url for retrofit api
         const val BASE_URL = "http://15.206.128.93/"
 
@@ -13,8 +14,11 @@ class Constants {
         const val USER_SESSION = "User_Session_Active"
 
         //keys
+        const val USER_DATA = "user data"
+        const val USER_SESSION_ACTIVE = "USER SESSION ACTIVE"
         const val TYPE_OF_BLOGS_TO_BE_DISPLAYED = "Blog type"
         const val USER_FIRST_NAME = "first name"
+        const val USER_PASSWORD = "user Password"
         const val USER_EMAIL = "user email"
         const val USER_PROFILE_PIC = "profile pic"
         const val USER_ID = "user id"

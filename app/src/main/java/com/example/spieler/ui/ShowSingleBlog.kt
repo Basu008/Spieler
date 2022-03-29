@@ -3,6 +3,7 @@ package com.example.spieler.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.example.spieler.R
@@ -22,19 +23,21 @@ class ShowSingleBlog : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val blog = intent.getSerializableExtra(Constants.BLOG_DATA) as Blog
-        val author = "by ${blog.author_info.first_name}"
+        if(blog.author_info != null){
+            val author = "by ${blog.author_info.first_name}"
+        }
 
         binding.blogViewHeading.text = blog.title
         if(blog.blog_img != null){
             Glide.with(this)
-                .load(blog.blog_img)
+                .load(blog.blog_img.toUri())
                 .fitCenter()
                 .into(binding.singleBlogImage)
         }
         else{
             binding.singleBlogImage.setImageResource(R.drawable.korg)
         }
-        binding.singleBlogAuthor.text = author
+//        binding.singleBlogAuthor.text = author
         binding.blogViewBody.text = blog.description
         binding.blogCreationDate.text = blog.created_at
     }

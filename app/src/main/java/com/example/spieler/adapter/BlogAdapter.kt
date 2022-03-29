@@ -23,7 +23,9 @@ class BlogAdapter : ListAdapter<Blog, BlogAdapter.BlogViewHolder>(BlogDiffCallBa
             binding.blogBody.text = blog.description
             binding.blogHeading.text = blog.title
             binding.characterImage.setImageResource(R.drawable.korg)
-            binding.blogAuthor.text = blog.author_info.first_name
+            if(blog.author_info != null){
+                binding.blogAuthor.text = blog.author_info.first_name
+            }
             binding.blogDate.text = blog.created_at
             binding.blogLayout.setOnClickListener {
                 Intent(context, ShowSingleBlog::class.java).also {
