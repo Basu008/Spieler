@@ -68,11 +68,11 @@ class BlogAdapter(val user: User) : ListAdapter<Blog, BlogAdapter.BlogViewHolder
 
     class BlogDiffCallBack : DiffUtil.ItemCallback<Blog>(){
         override fun areItemsTheSame(oldItem: Blog, newItem: Blog): Boolean {
-            TODO("Not yet implemented")
+           return oldItem._id == newItem._id
         }
 
         override fun areContentsTheSame(oldItem: Blog, newItem: Blog): Boolean {
-            TODO("Not yet implemented")
+            return oldItem == newItem
         }
 
     }

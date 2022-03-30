@@ -26,4 +26,8 @@ class Repository {
     suspend fun getCurrentUserDetails(id: String): Response<SignUpResponseBody>{
         return RetrofitInstance.api.getCurrentUserDetails(id)
     }
+
+    suspend fun postLike(likeRequestBody: LikeRequestBody): Response<LikeResponseBody>{
+        return RetrofitInstance.api.postLike(likeRequestBody)
+    }
 }

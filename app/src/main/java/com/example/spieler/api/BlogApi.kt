@@ -30,4 +30,9 @@ interface BlogApi {
     suspend fun getCurrentUserDetails(
         @Path("id") id: String
     ): Response<SignUpResponseBody>
+
+    @POST("like")
+    suspend fun postLike(
+        @Body likeRequestBody: LikeRequestBody
+    ): Response<LikeResponseBody>
 }

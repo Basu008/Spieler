@@ -42,7 +42,6 @@ class SplashScreenActivity : AppCompatActivity() {
                 viewModel.loginUser(LoginRequestBody(email!!, password!!))
                 viewModel.currentUser.observe(this){
                     if(it.isSuccessful){
-                        Toast.makeText(this, it.body()?.content?.token, Toast.LENGTH_SHORT).show()
                         viewModel.getCurrentUserDetails(userId!!)
                         viewModel.userDetails.observe(this){user ->
                             if(user != null){

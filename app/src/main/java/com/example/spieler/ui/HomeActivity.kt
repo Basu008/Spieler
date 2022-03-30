@@ -33,6 +33,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var viewModel: HomeViewModel
     private lateinit var viewModelFactory: HomeViewModelFactory
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
@@ -98,7 +99,6 @@ class HomeActivity : AppCompatActivity() {
                         remove(Constants.USER_PASSWORD)
                         apply()
                     }
-                    Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show()
                     Intent(this, MainActivity::class.java).also {
                         startActivity(it)
                         finish()
@@ -117,7 +117,7 @@ class HomeActivity : AppCompatActivity() {
         viewModel.allBlogs.observe(this){
             if(it.isSuccessful){
                 val blogAdapter = BlogAdapter(user)
-                blogAdapter.submitList(it.body()?.content)
+                blogAdapter.submitList(it.body()?.content?.sortedByDescending { it.created_at })
                 binding.homePageLayout.recentBlogsShimmer.stopShimmer()
                 binding.homePageLayout.allBlogsRv.adapter = blogAdapter
                 binding.homePageLayout.recentBlogsShimmer.visibility = View.GONE
@@ -136,4 +136,9 @@ class HomeActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    override fun onRestart() {
+        super.onRestart()
+    }
+
 }
