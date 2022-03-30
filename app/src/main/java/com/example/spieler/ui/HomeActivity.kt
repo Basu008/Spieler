@@ -116,7 +116,7 @@ class HomeActivity : AppCompatActivity() {
 
         viewModel.allBlogs.observe(this){
             if(it.isSuccessful){
-                val blogAdapter = BlogAdapter()
+                val blogAdapter = BlogAdapter(user)
                 blogAdapter.submitList(it.body()?.content)
                 binding.homePageLayout.recentBlogsShimmer.stopShimmer()
                 binding.homePageLayout.allBlogsRv.adapter = blogAdapter

@@ -11,15 +11,16 @@ import com.bumptech.glide.Glide
 import com.example.spieler.R
 import com.example.spieler.databinding.BlogItemBinding
 import com.example.spieler.model.Blog
+import com.example.spieler.model.User
 import com.example.spieler.ui.ShowAllBlogsActivity
 import com.example.spieler.ui.ShowSingleBlog
 import com.example.spieler.util.Constants
 
-class BlogAdapter : ListAdapter<Blog, BlogAdapter.BlogViewHolder>(BlogDiffCallBack()){
+class BlogAdapter(val user: User) : ListAdapter<Blog, BlogAdapter.BlogViewHolder>(BlogDiffCallBack()){
 
     class BlogViewHolder(private val binding: BlogItemBinding): RecyclerView.ViewHolder(binding.root){
 
-        fun bind(blog: Blog){
+        fun bind(blog: Blog, user: User){
             val context = binding.blogLayout.context
             binding.blogBody.text = blog.description
             binding.blogHeading.text = blog.title
@@ -39,6 +40,7 @@ class BlogAdapter : ListAdapter<Blog, BlogAdapter.BlogViewHolder>(BlogDiffCallBa
             binding.blogLayout.setOnClickListener {
                 Intent(context, ShowSingleBlog::class.java).also {
                     it.putExtra(Constants.BLOG_DATA, blog)
+                    it.putExtra(Constants.USER_ID, user._id)
                     context.startActivity(it)
                 }
             }
@@ -60,7 +62,7 @@ class BlogAdapter : ListAdapter<Blog, BlogAdapter.BlogViewHolder>(BlogDiffCallBa
 
     override fun onBindViewHolder(holder: BlogViewHolder, position: Int) {
         val blog = getItem(position)
-        holder.bind(blog)
+        holder.bind(blog, user)
     }
 
 
