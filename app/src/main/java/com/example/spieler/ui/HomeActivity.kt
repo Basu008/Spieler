@@ -81,6 +81,7 @@ class HomeActivity : AppCompatActivity() {
             when (menuItem.itemId){
                 R.id.miYourProfile -> {
                     Intent(this, ProfileActivity::class.java).also{
+                        it.putExtra(Constants.USER_DATA, user)
                         startActivity(it)
                     }
                 }

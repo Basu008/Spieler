@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.spieler.R
 import com.example.spieler.databinding.BlogItemBinding
 import com.example.spieler.model.Blog
@@ -22,7 +23,15 @@ class BlogAdapter : ListAdapter<Blog, BlogAdapter.BlogViewHolder>(BlogDiffCallBa
             val context = binding.blogLayout.context
             binding.blogBody.text = blog.description
             binding.blogHeading.text = blog.title
-            binding.characterImage.setImageResource(R.drawable.korg)
+            if(blog.blog_img != null){
+                Glide.with(context)
+                    .load(blog.blog_img)
+                    .circleCrop()
+                    .into(binding.characterImage)
+            }
+            else{
+                binding.characterImage.setImageResource(R.drawable.korg)
+            }
             if(blog.author_info != null){
                 binding.blogAuthor.text = blog.author_info.first_name
             }

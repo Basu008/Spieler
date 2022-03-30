@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.example.spieler.R
 import com.example.spieler.databinding.ActivityProfileBinding
+import com.example.spieler.model.User
 import com.example.spieler.util.Constants
 
 class ProfileActivity : AppCompatActivity() {
@@ -24,15 +25,16 @@ class ProfileActivity : AppCompatActivity() {
         supportActionBar?.elevation = 0f
         binding.yourBlogsShimmer.startShimmer()
         sessionSharedPreferences = getSharedPreferences(Constants.USER_SESSION, Context.MODE_PRIVATE)
+        val user = intent.getSerializableExtra(Constants.USER_DATA) as User
 
-        val username = sessionSharedPreferences.getString(Constants.USER_FIRST_NAME, "")
-        val email = sessionSharedPreferences.getString(Constants.USER_EMAIL, "")
-        val profilePic = sessionSharedPreferences.getString(Constants.USER_PROFILE_PIC, "defaultPic")
+        val username = user.first_name
+        val email = user.email
+        val profilePic = user.profile_img
 
         binding.profileUsername.text = username
         binding.profileEmail.text = email
         Glide.with(this)
-            .load(profilePic?.toUri())
+            .load(profilePic.toUri())
             .circleCrop()
             .placeholder(R.drawable.user)
             .into(binding.profileDp)
