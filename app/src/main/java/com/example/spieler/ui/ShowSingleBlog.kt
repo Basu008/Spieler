@@ -46,9 +46,7 @@ class ShowSingleBlog : AppCompatActivity() {
 
         val blog = intent.getSerializableExtra(Constants.BLOG_DATA) as Blog
         val currentUserId = intent.getStringExtra(Constants.USER_ID)!!
-        if(blog.author_info != null){
-            val author = "by ${blog.author_info.first_name}"
-        }
+        val author = "by ${blog.author_info.first_name}"
 
         blog.likes.forEach {
             if(it.user_id == currentUserId){
@@ -69,7 +67,7 @@ class ShowSingleBlog : AppCompatActivity() {
             binding.singleBlogImage.setImageResource(R.drawable.korg)
         }
 
-//        binding.singleBlogAuthor.text = author
+        binding.singleBlogAuthor.text = author
         binding.blogViewBody.text = blog.description
         binding.blogCreationDate.text = blog.created_at
 
