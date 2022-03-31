@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Spieler"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.ShowAllBlogsActivity"
+            android:name=".ui.NewsActivity"
             android:exported="false" />
         <activity
             android:name=".ui.SplashScreenActivity"

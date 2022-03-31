@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.example.spieler.R
 import com.example.spieler.adapter.BlogAdapter
 import com.example.spieler.databinding.ActivityHomeBinding
+import com.example.spieler.model.Blog
 import com.example.spieler.model.User
 import com.example.spieler.repository.Repository
 import com.example.spieler.util.Constants
@@ -32,6 +33,8 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var editor: SharedPreferences.Editor
     private lateinit var viewModel: HomeViewModel
     private lateinit var viewModelFactory: HomeViewModelFactory
+
+    private lateinit var news: List<Blog>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,6 +80,9 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
+        val newsIntent = Intent(this, NewsActivity::class.java)
+        newsIntent.putExtra(Constants.USER_DATA, user)
+
         //On interacting with nav drawer menu
         binding.navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId){
@@ -87,10 +93,7 @@ class HomeActivity : AppCompatActivity() {
                     }
                 }
                 R.id.miNews -> {
-                    Intent(this, ShowAllBlogsActivity::class.java).also{
-                        it.putExtra(Constants.TITLE_TO_BE_DISPLAYED, Constants.NEWS_TITTLE)
-                        startActivity(it)
-                    }
+                    startActivity(newsIntent)
                 }
                 R.id.miLogOut -> {
                     editor.apply {
@@ -114,18 +117,20 @@ class HomeActivity : AppCompatActivity() {
 
         viewModel.getAllBlogs()
 
-        viewModel.allBlogs.observe(this){
-            if(it.isSuccessful){
+        viewModel.allBlogs.observe(this){response ->
+            if(response.isSuccessful){
                 val blogAdapter = BlogAdapter(user)
-                val blogs = it.body()?.content?.sortedByDescending { it.created_at }!!
+                newsIntent.putExtra(Constants.BLOG_DATA, response.body())
+                val blogs = response.body()?.content?.sortedByDescending { it.created_at }!!
                 blogAdapter.submitList(blogs.filter { it.tag == "BLOG" })
+                news = blogs.filter { it.tag == "NEWS" }
                 binding.homePageLayout.recentBlogsShimmer.stopShimmer()
                 binding.homePageLayout.allBlogsRv.adapter = blogAdapter
                 binding.homePageLayout.recentBlogsShimmer.visibility = View.GONE
                 binding.homePageLayout.allBlogsRv.visibility = View.VISIBLE
             }
             else{
-                Toast.makeText(this, it.message(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, response.message(), Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -1,6 +1,5 @@
 package com.example.spieler.adapter
 
-import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import com.example.spieler.R
 import com.example.spieler.databinding.BlogItemBinding
 import com.example.spieler.model.Blog
 import com.example.spieler.model.User
-import com.example.spieler.ui.ShowAllBlogsActivity
 import com.example.spieler.ui.ShowSingleBlog
 import com.example.spieler.util.Constants
 
@@ -68,11 +66,11 @@ class BlogAdapter(val user: User) : ListAdapter<Blog, BlogAdapter.BlogViewHolder
 
     class BlogDiffCallBack : DiffUtil.ItemCallback<Blog>(){
         override fun areItemsTheSame(oldItem: Blog, newItem: Blog): Boolean {
-           return oldItem._id == newItem._id
+            TODO("Not implemented yet")
         }
 
         override fun areContentsTheSame(oldItem: Blog, newItem: Blog): Boolean {
-            return oldItem == newItem
+            TODO("NOT implemented yet")
         }
 
     }
