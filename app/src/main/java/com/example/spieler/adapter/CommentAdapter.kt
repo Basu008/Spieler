@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.spieler.R
 import com.example.spieler.databinding.CommentItemBinding
 import com.example.spieler.model.Comment
 
@@ -16,10 +17,17 @@ class CommentAdapter: ListAdapter<Comment, CommentAdapter.CommentViewHolder>(Com
             val context = binding.commentLayout.context
             binding.commentAuthorUsername.text = comment.comment_author.first_name
             binding.commentAuthorComment.text = comment.description
-            Glide.with(context)
-                .load(comment.comment_author.profile_img)
-                .circleCrop()
-                .into(binding.commentAuthorDP)
+            if(comment.comment_author.profile_img == "default"){
+                Glide.with(context)
+                    .load(R.drawable.user)
+                    .circleCrop()
+                    .into(binding.commentAuthorDP)
+            }
+            else
+                Glide.with(context)
+                    .load(comment.comment_author.profile_img)
+                    .circleCrop()
+                    .into(binding.commentAuthorDP)
         }
 
         companion object{
