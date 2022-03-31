@@ -14,7 +14,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 import retrofit2.Response
 import java.lang.Exception
 
@@ -31,16 +30,16 @@ class AddBlogViewModel(private val repository: Repository): ViewModel() {
         }
     }
 
-    fun uploadImageToFirebase(uri: Uri, fileName: String,
-    title: String, description: String,
-    id: String) = CoroutineScope(Dispatchers.IO).launch{
+    fun uploadImageToFirebase(currUri: Uri, fileName: String,
+                              title: String, description: String,
+                              id: String, blogType: String) = CoroutineScope(Dispatchers.IO).launch{
         try{
-            uri.let {
+            currUri.let {
                 val filePath = blogImageStorageRef.child("blogImages/$fileName")
                 filePath.putFile(it)
                     .addOnSuccessListener {
-                        filePath.downloadUrl.addOnSuccessListener {
-                            postBlog(PostBlogBody(title, description, id, uri.toString()))
+                        filePath.downloadUrl.addOnSuccessListener {uri ->
+                            postBlog(PostBlogBody(title, description, id, uri.toString(), blogType))
                         }
                     }
             }.await()

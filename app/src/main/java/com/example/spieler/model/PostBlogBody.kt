@@ -7,5 +7,6 @@ data class PostBlogBody(
     val title: String,
     val description: String,
     val User_ID: String,
-    val blog_img: String
+    val blog_img: String,
+    val tag: String
 ): Serializable

@@ -71,10 +71,10 @@ class AddBlogActivity : AppCompatActivity() {
                 val date = SimpleDateFormat("yyMMddHHmmss", Locale.getDefault()).format(Date())
                 if(currFile != null){
                     viewModel.uploadImageToFirebase(currFile!!, date,
-                    title, body, userId)
+                    title, body, userId, "BLOG")
                 }
                 else{
-                    val postBlogBody = PostBlogBody(title, body, userId, "defaultPic")
+                    val postBlogBody = PostBlogBody(title, body, userId, "defaultPic", "BLOG")
                     viewModel.postBlog(postBlogBody)
                 }
             }
