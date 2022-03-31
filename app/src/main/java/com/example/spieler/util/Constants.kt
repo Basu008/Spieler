@@ -7,7 +7,7 @@ class Constants {
         const val BASE_URL = "http://15.206.128.93/"
 
         //type of blogs to be displayed
-        const val SAVED_BLOGS = "Saved blogs"
+        const val NEWS_TITTLE = "News"
         const val OWN_BLOGS = "Your blogs"
 
         //Shared preference names
@@ -17,7 +17,7 @@ class Constants {
         const val USER_DATA = "user data"
         const val BLOG_LIKED = "blog liked"
         const val USER_SESSION_ACTIVE = "USER SESSION ACTIVE"
-        const val TYPE_OF_BLOGS_TO_BE_DISPLAYED = "Blog type"
+        const val TITLE_TO_BE_DISPLAYED = "Activity title"
         const val USER_FIRST_NAME = "first name"
         const val USER_PASSWORD = "user Password"
         const val USER_EMAIL = "user email"

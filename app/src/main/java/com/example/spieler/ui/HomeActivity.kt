@@ -86,9 +86,9 @@ class HomeActivity : AppCompatActivity() {
                         startActivity(it)
                     }
                 }
-                R.id.miSavedBlog -> {
+                R.id.miNews -> {
                     Intent(this, ShowAllBlogsActivity::class.java).also{
-                        it.putExtra(Constants.TYPE_OF_BLOGS_TO_BE_DISPLAYED, Constants.SAVED_BLOGS)
+                        it.putExtra(Constants.TITLE_TO_BE_DISPLAYED, Constants.NEWS_TITTLE)
                         startActivity(it)
                     }
                 }

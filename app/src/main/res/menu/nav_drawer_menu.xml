@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/miSavedBlog"
-        android:title="Saved Blogs"
-        android:icon="@drawable/bookmark"/>
+        android:id="@+id/miNews"
+        android:title="News"
+        android:icon="@drawable/news"/>
     <item
         android:id="@+id/miYourProfile"
         android:title="Profile"

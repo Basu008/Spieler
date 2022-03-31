@@ -15,7 +15,7 @@ class ShowAllBlogsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_show_all_blogs)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        val blogsType = intent.getStringExtra(Constants.TYPE_OF_BLOGS_TO_BE_DISPLAYED)
+        val blogsType = intent.getStringExtra(Constants.TITLE_TO_BE_DISPLAYED)
         supportActionBar?.title = blogsType
     }
 
