@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.spieler.R
 import com.example.spieler.databinding.ActivityShowSingleBlogBinding
 import com.example.spieler.model.Blog
+import com.example.spieler.model.DeleteLikeRequestBody
 import com.example.spieler.model.LikeRequestBody
 import com.example.spieler.repository.Repository
 import com.example.spieler.util.Constants
@@ -26,11 +27,9 @@ class ShowSingleBlog : AppCompatActivity() {
     private lateinit var binding: ActivityShowSingleBlogBinding
     private lateinit var viewModel: SingleBlogViewModel
     private lateinit var viewModelFactory: SingleBlogViewModelFactory
-    private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var editor: SharedPreferences.Editor
 
-    private var likedEarlier = false
     private var blogNotLiked = true
+    private var like_id = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,21 +43,18 @@ class ShowSingleBlog : AppCompatActivity() {
                 SingleBlogViewModel::class.java
         ]
 
-        sharedPreferences = getSharedPreferences(Constants.BLOG_LIKED, Context.MODE_PRIVATE)
-        editor = sharedPreferences.edit()
 
         val blog = intent.getSerializableExtra(Constants.BLOG_DATA) as Blog
-        likedEarlier = sharedPreferences.getBoolean(blog._id, false)
         val currentUserId = intent.getStringExtra(Constants.USER_ID)!!
         if(blog.author_info != null){
             val author = "by ${blog.author_info.first_name}"
         }
 
         blog.likes.forEach {
-            if(it.user_id == currentUserId || likedEarlier){
+            if(it.user_id == currentUserId){
                 binding.likeBtn.setImageResource(R.drawable.liked_24)
+                like_id = it._id
                 blogNotLiked = false
-                likedEarlier = true
             }
         }
 
@@ -80,17 +76,28 @@ class ShowSingleBlog : AppCompatActivity() {
         binding.likeBtn.setOnClickListener {
             if(blogNotLiked){
                 viewModel.likeBlog(LikeRequestBody(currentUserId, blog._id))
-                editor.apply{
-                    putBoolean(blog._id, true)
-                    apply()
+//                editor.apply{
+//                    putBoolean(blog._id, true)
+//                    apply()
+//                }
+                viewModel.postLiked.observe(this){
+                    if(it.isSuccessful){
+                        like_id = it.body()?.content?._id!!
+                    }
                 }
                 binding.likeBtn.setImageResource(R.drawable.liked_24)
                 blogNotLiked = false
             }
             else{
-                editor.apply(){
-                    remove(blog._id)
-                    apply()
+//                editor.apply(){
+//                    remove(blog._id)
+//                    apply()
+//                }
+                viewModel.dislikeBlog(like_id, DeleteLikeRequestBody(blog._id))
+                viewModel.postDisliked.observe(this){
+                    if(it.isSuccessful){
+//
+                    }
                 }
                 binding.likeBtn.setImageResource(R.drawable.unliked_24)
                 blogNotLiked = true
@@ -107,7 +114,4 @@ class ShowSingleBlog : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
 }

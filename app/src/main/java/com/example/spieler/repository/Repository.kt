@@ -30,4 +30,8 @@ class Repository {
     suspend fun postLike(likeRequestBody: LikeRequestBody): Response<LikeResponseBody>{
         return RetrofitInstance.api.postLike(likeRequestBody)
     }
+
+    suspend fun deleteLike(id: String, deleteLikeRequestBody: DeleteLikeRequestBody): Response<DeleteLikeResponseBody>{
+        return RetrofitInstance.api.deleteLike(id, deleteLikeRequestBody)
+    }
 }

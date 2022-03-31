@@ -9,6 +9,7 @@ data class Blog(
     val comment: ArrayList<Comment>,
     val created_at: String,
     val description: String,
+    val tag: String,
     val likes: ArrayList<Like>,
     val title: String
 ): Serializable

@@ -2,10 +2,7 @@ package com.example.spieler.api
 
 import com.example.spieler.model.*
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface BlogApi {
     @GET("blogpages")
@@ -35,4 +32,10 @@ interface BlogApi {
     suspend fun postLike(
         @Body likeRequestBody: LikeRequestBody
     ): Response<LikeResponseBody>
+
+    @HTTP(method = "DELETE", path = "/like/dlt/{id}", hasBody = true)
+    suspend fun deleteLike(
+        @Path("id") id: String,
+        @Body deleteLikeRequestBody: DeleteLikeRequestBody
+    ): Response<DeleteLikeResponseBody>
 }

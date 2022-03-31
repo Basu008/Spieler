@@ -117,7 +117,8 @@ class HomeActivity : AppCompatActivity() {
         viewModel.allBlogs.observe(this){
             if(it.isSuccessful){
                 val blogAdapter = BlogAdapter(user)
-                blogAdapter.submitList(it.body()?.content?.sortedByDescending { it.created_at })
+                val blogs = it.body()?.content?.sortedByDescending { it.created_at }!!
+                blogAdapter.submitList(blogs.filter { it.tag == "BLOG" })
                 binding.homePageLayout.recentBlogsShimmer.stopShimmer()
                 binding.homePageLayout.allBlogsRv.adapter = blogAdapter
                 binding.homePageLayout.recentBlogsShimmer.visibility = View.GONE
@@ -139,6 +140,7 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onRestart() {
         super.onRestart()
+        viewModel.getAllBlogs()
     }
 
 }
