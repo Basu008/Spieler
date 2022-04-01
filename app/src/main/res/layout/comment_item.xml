@@ -14,7 +14,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:scaleType="fitXY"
-            android:src="@drawable/korg_transparent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

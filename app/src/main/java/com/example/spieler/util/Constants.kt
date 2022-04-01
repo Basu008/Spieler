@@ -16,6 +16,7 @@ class Constants {
         //keys
         const val USER_DATA = "user data"
         const val NEWS_LIST = "news"
+        const val COMMENT_DATA = "comment"
         const val BLOG_LIKED = "blog liked"
         const val USER_SESSION_ACTIVE = "USER SESSION ACTIVE"
         const val TITLE_TO_BE_DISPLAYED = "Activity title"

@@ -1,12 +1,9 @@
 package com.example.spieler.ui
 
-import android.content.Context
-import android.content.SharedPreferences
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
-import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -18,9 +15,7 @@ import com.example.spieler.model.DeleteLikeRequestBody
 import com.example.spieler.model.LikeRequestBody
 import com.example.spieler.repository.Repository
 import com.example.spieler.util.Constants
-import com.example.spieler.viewmodel.HomeViewModel
 import com.example.spieler.viewmodel.SingleBlogViewModel
-import com.example.spieler.viewmodelfactory.HomeViewModelFactory
 import com.example.spieler.viewmodelfactory.SingleBlogViewModelFactory
 
 class ShowSingleBlog : AppCompatActivity() {
@@ -30,7 +25,7 @@ class ShowSingleBlog : AppCompatActivity() {
     private lateinit var viewModelFactory: SingleBlogViewModelFactory
 
     private var blogNotLiked = true
-    private var like_id = ""
+    private var likeId = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +47,7 @@ class ShowSingleBlog : AppCompatActivity() {
         blog.likes.forEach {
             if(it.user_id == currentUserId){
                 binding.likeBtn.setImageResource(R.drawable.liked_24)
-                like_id = it._id
+                likeId = it._id
                 blogNotLiked = false
             }
         }
@@ -81,7 +76,7 @@ class ShowSingleBlog : AppCompatActivity() {
 //                }
                 viewModel.postLiked.observe(this){
                     if(it.isSuccessful){
-                        like_id = it.body()?.content?._id!!
+                        likeId = it.body()?.content?._id!!
                     }
                 }
                 binding.likeBtn.setImageResource(R.drawable.liked_24)
@@ -92,7 +87,7 @@ class ShowSingleBlog : AppCompatActivity() {
 //                    remove(blog._id)
 //                    apply()
 //                }
-                viewModel.dislikeBlog(like_id, DeleteLikeRequestBody(blog._id))
+                viewModel.dislikeBlog(likeId, DeleteLikeRequestBody(blog._id))
                 viewModel.postDisliked.observe(this){
                     if(it.isSuccessful){
 //
@@ -100,6 +95,14 @@ class ShowSingleBlog : AppCompatActivity() {
                 }
                 binding.likeBtn.setImageResource(R.drawable.unliked_24)
                 blogNotLiked = true
+            }
+        }
+
+        binding.commentBtn.setOnClickListener {
+            Intent(this, CommentActivity::class.java).also{
+                it.putExtra(Constants.BLOG_DATA, blog)
+                it.putExtra(Constants.USER_ID, currentUserId)
+                startActivity(it)
             }
         }
     }

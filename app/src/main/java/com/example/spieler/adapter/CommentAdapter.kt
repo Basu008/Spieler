@@ -15,19 +15,22 @@ class CommentAdapter: ListAdapter<Comment, CommentAdapter.CommentViewHolder>(Com
     class CommentViewHolder(private val binding: CommentItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(comment: Comment){
             val context = binding.commentLayout.context
-            binding.commentAuthorUsername.text = comment.comment_author.first_name
-            binding.commentAuthorComment.text = comment.description
-            if(comment.comment_author.profile_img == "default"){
-                Glide.with(context)
-                    .load(R.drawable.user)
-                    .circleCrop()
-                    .into(binding.commentAuthorDP)
+            if(comment.comment_author != null){
+                binding.commentAuthorUsername.text = comment.comment_author.first_name
+                binding.commentAuthorComment.text = comment.description
+                if(comment.comment_author.profile_img == "default"){
+                    Glide.with(context)
+                        .load(R.drawable.user)
+                        .circleCrop()
+                        .into(binding.commentAuthorDP)
+                }
+                else
+                    Glide.with(context)
+                        .load(comment.comment_author.profile_img)
+                        .circleCrop()
+                        .into(binding.commentAuthorDP)
             }
-            else
-                Glide.with(context)
-                    .load(comment.comment_author.profile_img)
-                    .circleCrop()
-                    .into(binding.commentAuthorDP)
+
         }
 
         companion object{
