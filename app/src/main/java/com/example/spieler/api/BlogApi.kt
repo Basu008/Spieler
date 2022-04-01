@@ -38,4 +38,9 @@ interface BlogApi {
         @Path("id") id: String,
         @Body deleteLikeRequestBody: DeleteLikeRequestBody
     ): Response<DeleteLikeResponseBody>
+
+    @POST("comment")
+    suspend fun postComment(
+        @Body commentRequestBody: CommentRequestBody
+    ): Response<CommentResponseBody>
 }
