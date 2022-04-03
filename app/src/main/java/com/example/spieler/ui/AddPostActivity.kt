@@ -1,6 +1,6 @@
 package com.example.spieler.ui
 
-import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -17,7 +17,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.spieler.R
-import com.example.spieler.databinding.ActivityAddBlogBinding
+import com.example.spieler.databinding.ActivityAddPostBinding
 import com.example.spieler.databinding.CustomProgressDialogBinding
 import com.example.spieler.model.PostBlogBody
 import com.example.spieler.model.User
@@ -28,9 +28,9 @@ import com.example.spieler.viewmodelfactory.AddBlogViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AddBlogActivity : AppCompatActivity() {
+class AddPostActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityAddBlogBinding
+    private lateinit var binding: ActivityAddPostBinding
     private lateinit var viewModel: AddBlogViewModel
     private lateinit var viewModelFactory: AddBlogViewModelFactory
     private lateinit var playerNameDialog: AlertDialog.Builder
@@ -39,18 +39,19 @@ class AddBlogActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_add_blog)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_add_post)
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = ""
 
-        val blogImageResult = registerForActivityResult(ActivityResultContracts.GetContent()){
+        val postImageResult = registerForActivityResult(ActivityResultContracts.GetContent()){
             if(it != null){
-                binding.uploadImageButton.visibility = View.GONE
+                binding.uploadPostImageButton.visibility = View.GONE
                 currFile = it
                 Glide.with(this)
                     .load(it)
                     .centerCrop()
-                    .into(binding.blogImageUpload)
+                    .into(binding.postImageUpload)
             }
         }
 
@@ -61,25 +62,24 @@ class AddBlogActivity : AppCompatActivity() {
         val user = intent.getSerializableExtra(Constants.USER_DATA) as User
         val userId: String = user._id
 
-        binding.uploadImageButton.setOnClickListener{
-            blogImageResult.launch("image/*")
+        binding.uploadPostImageButton.setOnClickListener{
+            postImageResult.launch("image/*")
         }
 
-        binding.submitBlogBtn.setOnClickListener {
-            val title = binding.blogHeadingInput.text.toString().trim()
-            val body = binding.blogBodyInput.text.toString().trim()
-            if(body.isEmpty() || title.isEmpty()){
-                Toast.makeText(this, "Incomplete Article!", Toast.LENGTH_SHORT).show()
+        binding.submitPostBtn.setOnClickListener {
+            val caption = binding.postCaptionInput.text.toString().trim()
+            if(caption.isEmpty()){
+                Toast.makeText(this, "Provide a caption", Toast.LENGTH_SHORT).show()
             }
             else{
-                createDialog("Uploading your Article")
+                createDialog("Uploading your post")
                 val date = SimpleDateFormat("yyMMddHHmmss", Locale.getDefault()).format(Date())
                 if(currFile != null){
                     viewModel.uploadImageToFirebase(currFile!!, date,
-                    title, body, userId, "BLOG")
+                        "title", caption, userId, "POST")
                 }
                 else{
-                    val postBlogBody = PostBlogBody(title, body, userId, Constants.DEFAULT_PIC, "BLOG")
+                    val postBlogBody = PostBlogBody("title", caption, userId, Constants.DEFAULT_PIC, "POST")
                     viewModel.postBlog(postBlogBody)
                 }
             }
@@ -90,7 +90,9 @@ class AddBlogActivity : AppCompatActivity() {
             if(it.isSuccessful){
                 dialog.dismiss()
                 Toast.makeText(this, "Blog created", Toast.LENGTH_SHORT).show()
-                finish()
+                Intent(this, HomeActivity::class.java).also {intent ->
+                    startActivity(intent)
+                }
             }
             else{
                 Toast.makeText(this, it.message(), Toast.LENGTH_SHORT).show()

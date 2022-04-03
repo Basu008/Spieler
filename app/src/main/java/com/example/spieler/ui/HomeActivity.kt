@@ -87,33 +87,9 @@ class HomeActivity : AppCompatActivity() {
         val newsIntent = Intent(this, NewsActivity::class.java)
         newsIntent.putExtra(Constants.USER_DATA, user)
 
-        //On interacting with nav drawer menu
-        binding.navView.setNavigationItemSelectedListener { menuItem ->
-            when (menuItem.itemId){
-                R.id.miYourProfile -> {
-                    Intent(this, ProfileActivity::class.java).also{
-                        it.putExtra(Constants.USER_DATA, user)
-                        startActivity(it)
-                    }
-                }
-                R.id.miNews -> {
-                    startActivity(newsIntent)
-                }
-                R.id.miLogOut -> {
-                    editor.apply {
-                        remove(Constants.USER_ID)
-                        remove(Constants.USER_EMAIL)
-                        remove(Constants.USER_PASSWORD)
-                        apply()
-                    }
-                    Intent(this, MainActivity::class.java).also {
-                        startActivity(it)
-                        finish()
-                    }
-                }
-            }
-            true
-        }
+        val profileIntent = Intent(this, ProfileActivity::class.java)
+        profileIntent.putExtra(Constants.USER_DATA, user)
+
         setUpRecyclerView()
         val repository = Repository()
         viewModelFactory = HomeViewModelFactory(repository)
@@ -123,6 +99,7 @@ class HomeActivity : AppCompatActivity() {
 
         viewModel.allBlogs.observe(this){response ->
             if(response.isSuccessful){
+                profileIntent.putExtra(Constants.BLOG_DATA, response.body())
                 val blogAdapter = BlogAdapter(user)
                 val postsAdapter = PostsAdapter(user)
                 newsIntent.putExtra(Constants.BLOG_DATA, response.body())
@@ -142,6 +119,31 @@ class HomeActivity : AppCompatActivity() {
             else{
                 Toast.makeText(this, response.message(), Toast.LENGTH_SHORT).show()
             }
+        }
+
+        //On interacting with nav drawer menu
+        binding.navView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId){
+                R.id.miYourProfile -> {
+                    startActivity(profileIntent)
+                }
+                R.id.miNews -> {
+                    startActivity(newsIntent)
+                }
+                R.id.miLogOut -> {
+                    editor.apply {
+                        remove(Constants.USER_ID)
+                        remove(Constants.USER_EMAIL)
+                        remove(Constants.USER_PASSWORD)
+                        apply()
+                    }
+                    Intent(this, MainActivity::class.java).also {
+                        startActivity(it)
+                        finish()
+                    }
+                }
+            }
+            true
         }
     }
 

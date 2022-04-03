@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:fontFamily="@font/segoeui"
-            android:text="Your Blogs"
+            android:text="Your Posts"
             android:textColor="@color/black"
             android:textSize="26sp"
             android:layout_marginTop="80dp"
@@ -106,14 +106,30 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <include layout="@layout/your_blogs_placeholder" />
+                <include layout="@layout/own_post_item_placeholder" />
 
-                <include layout="@layout/your_blogs_placeholder" />
+                <include layout="@layout/own_post_item_placeholder" />
 
 
             </LinearLayout>
 
         </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <ImageButton
+            android:id="@+id/addPostBtn"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:background="@drawable/add_blog_btn_bg"
+            android:elevation="10dp"
+            android:padding="0dp"
+            android:src="@drawable/ic_baseline_camera_alt_24"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintBottom_toBottomOf="@+id/your_articles_heading"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/your_articles_heading" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

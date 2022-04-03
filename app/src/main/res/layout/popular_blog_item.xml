@@ -9,6 +9,7 @@
         android:layout_height="280dp"
         android:orientation="vertical"
         android:gravity="bottom"
+        android:elevation="20dp"
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
         android:background="@drawable/popular_blog_bg"
