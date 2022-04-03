@@ -1,5 +1,6 @@
 package com.example.spieler.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -8,16 +9,28 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.spieler.databinding.PopularBlogItemBinding
 import com.example.spieler.model.Blog
+import com.example.spieler.model.User
+import com.example.spieler.ui.ShowSingleBlog
+import com.example.spieler.ui.ShowSinglePost
+import com.example.spieler.util.Constants
 
-class PostsAdapter: ListAdapter<Blog, PostsAdapter.PopularBlogViewHolder>(PopularBlogDiffCallback()){
+class PostsAdapter(private val user: User): ListAdapter<Blog, PostsAdapter.PopularBlogViewHolder>(PopularBlogDiffCallback()){
 
     class PopularBlogViewHolder(val binding: PopularBlogItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(blog: Blog){
+        fun bind(blog: Blog, user: User){
+            val context = binding.root.context
             val author = "by ${blog.author_info.first_name}"
             binding.popularBlogDate.text = author
-            Glide.with(binding.root.context)
+            Glide.with(context)
                 .load(blog.blog_img)
                 .into(binding.imageView2)
+            binding.postLayout.setOnClickListener {
+                Intent(context, ShowSinglePost::class.java).also {
+                    it.putExtra(Constants.BLOG_ID, blog._id)
+                    it.putExtra(Constants.USER_ID, user._id)
+                    context.startActivity(it)
+                }
+            }
         }
 
         companion object{
@@ -45,6 +58,6 @@ class PostsAdapter: ListAdapter<Blog, PostsAdapter.PopularBlogViewHolder>(Popula
 
     override fun onBindViewHolder(holder: PopularBlogViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item, user)
     }
 }

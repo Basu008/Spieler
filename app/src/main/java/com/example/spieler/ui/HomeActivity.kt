@@ -121,7 +121,7 @@ class HomeActivity : AppCompatActivity() {
         viewModel.allBlogs.observe(this){response ->
             if(response.isSuccessful){
                 val blogAdapter = BlogAdapter(user)
-                val postsAdapter = PostsAdapter()
+                val postsAdapter = PostsAdapter(user)
                 newsIntent.putExtra(Constants.BLOG_DATA, response.body())
                 val blogs = response.body()?.content?.sortedByDescending { it.created_at }!!
                 blogAdapter.submitList(blogs.filter { it.tag == "BLOG" })
