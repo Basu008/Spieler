@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.spieler.R
 import com.example.spieler.adapter.BlogAdapter
+import com.example.spieler.adapter.PostsAdapter
 import com.example.spieler.databinding.ActivityHomeBinding
 import com.example.spieler.model.Blog
 import com.example.spieler.model.User
@@ -70,7 +71,7 @@ class HomeActivity : AppCompatActivity() {
         headerUsername.text = username
         headerEmail.text = email
 
-        binding.homePageLayout.popularBlogShimmer.startShimmer()
+        binding.homePageLayout.postsShimmer.startShimmer()
         binding.homePageLayout.recentBlogsShimmer.startShimmer()
 
         binding.homePageLayout.addBlogBtn.setOnClickListener {
@@ -120,14 +121,20 @@ class HomeActivity : AppCompatActivity() {
         viewModel.allBlogs.observe(this){response ->
             if(response.isSuccessful){
                 val blogAdapter = BlogAdapter(user)
+                val postsAdapter = PostsAdapter()
                 newsIntent.putExtra(Constants.BLOG_DATA, response.body())
                 val blogs = response.body()?.content?.sortedByDescending { it.created_at }!!
                 blogAdapter.submitList(blogs.filter { it.tag == "BLOG" })
+                postsAdapter.submitList(blogs.filter { it.tag == "POST" })
                 news = blogs.filter { it.tag == "NEWS" }
+                binding.homePageLayout.postsShimmer.stopShimmer()
                 binding.homePageLayout.recentBlogsShimmer.stopShimmer()
-                binding.homePageLayout.allBlogsRv.adapter = blogAdapter
+                binding.homePageLayout.recentBlogsRV.adapter = blogAdapter
+                binding.homePageLayout.postsRV.adapter = postsAdapter
                 binding.homePageLayout.recentBlogsShimmer.visibility = View.GONE
-                binding.homePageLayout.allBlogsRv.visibility = View.VISIBLE
+                binding.homePageLayout.recentBlogsRV.visibility = View.VISIBLE
+                binding.homePageLayout.postsShimmer.visibility = View.GONE
+                binding.homePageLayout.postsRV.visibility = View.VISIBLE
             }
             else{
                 Toast.makeText(this, response.message(), Toast.LENGTH_SHORT).show()

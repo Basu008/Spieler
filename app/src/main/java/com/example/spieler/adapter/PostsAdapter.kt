@@ -5,16 +5,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.spieler.databinding.PopularBlogItemBinding
 import com.example.spieler.model.Blog
 
-class PopularBlogAdapter: ListAdapter<Blog, PopularBlogAdapter.PopularBlogViewHolder>(PopularBlogDiffCallback()){
+class PostsAdapter: ListAdapter<Blog, PostsAdapter.PopularBlogViewHolder>(PopularBlogDiffCallback()){
 
     class PopularBlogViewHolder(val binding: PopularBlogItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(blog: Blog){
-            binding.popularBlogHeading.text = blog.title
-            binding.popularBlogBy.text = blog.description
-            binding.popularBlogDate.text = "15 Mar, 2022"
+            val author = "by ${blog.author_info.first_name}"
+            binding.popularBlogDate.text = author
+            Glide.with(binding.root.context)
+                .load(blog.blog_img)
+                .into(binding.imageView2)
         }
 
         companion object{

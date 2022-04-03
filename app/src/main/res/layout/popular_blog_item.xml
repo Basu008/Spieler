@@ -18,18 +18,8 @@
             android:id="@+id/imageView2"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:scaleType="fitXY"
             app:srcCompat="@drawable/cap" />
-
-        <TextView
-            android:id="@+id/popular_blog_heading"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Blog Heading"
-            android:layout_marginTop="5dp"
-            android:textStyle="bold"
-            android:textSize="19sp"
-            android:textColor="@color/black"
-            android:textAlignment="center" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,8 +32,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="By Basu"
-                android:textSize="12sp"
+                android:textSize="11sp"
                 android:textAlignment="viewStart" />
 
             <TextView
@@ -51,8 +40,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/white"
                 android:text="15 Mar, 2022"
-                android:textSize="12sp"
+                android:textSize="11sp"
                 android:textAlignment="viewEnd" />
         </LinearLayout>
     </LinearLayout>
