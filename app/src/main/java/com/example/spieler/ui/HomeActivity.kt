@@ -28,6 +28,8 @@ import com.example.spieler.util.Constants
 import com.example.spieler.viewmodel.HomeViewModel
 import com.example.spieler.viewmodelfactory.HomeViewModelFactory
 import www.sanju.zoomrecyclerlayout.ZoomRecyclerLayout
+import java.text.SimpleDateFormat
+import java.util.*
 
 class HomeActivity : AppCompatActivity() {
 
@@ -59,6 +61,7 @@ class HomeActivity : AppCompatActivity() {
         val username = user.first_name
         val email = user.email
         val profilePic = user.profile_img
+        val currDate = SimpleDateFormat("E, LLL dd, yyyy", Locale.getDefault()).format(Date())
 
         //Update data to UI
         val headerLayout = binding.navView.getHeaderView(0)
@@ -76,6 +79,7 @@ class HomeActivity : AppCompatActivity() {
 
         binding.homePageLayout.postsShimmer.startShimmer()
         binding.homePageLayout.recentBlogsShimmer.startShimmer()
+        binding.homePageLayout.todayDate.text = currDate
 
         binding.homePageLayout.addBlogBtn.setOnClickListener {
             Intent(this, AddBlogActivity::class.java).also {

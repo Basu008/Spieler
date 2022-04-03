@@ -67,7 +67,9 @@ class AddBlogActivity : AppCompatActivity() {
 
         binding.submitBlogBtn.setOnClickListener {
             val title = binding.blogHeadingInput.text.toString().trim()
+                .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
             val body = binding.blogBodyInput.text.toString().trim()
+                .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
             if(body.isEmpty() || title.isEmpty()){
                 Toast.makeText(this, "Incomplete Article!", Toast.LENGTH_SHORT).show()
             }
@@ -76,10 +78,11 @@ class AddBlogActivity : AppCompatActivity() {
                 val date = SimpleDateFormat("yyMMddHHmmss", Locale.getDefault()).format(Date())
                 if(currFile != null){
                     viewModel.uploadImageToFirebase(currFile!!, date,
-                    title, body, userId, "BLOG")
+                        title, body, userId, "BLOG")
                 }
                 else{
-                    val postBlogBody = PostBlogBody(title, body, userId, Constants.DEFAULT_PIC, "BLOG")
+                    val postBlogBody = PostBlogBody(
+                        title, body, userId, Constants.DEFAULT_PIC, "BLOG")
                     viewModel.postBlog(postBlogBody)
                 }
             }

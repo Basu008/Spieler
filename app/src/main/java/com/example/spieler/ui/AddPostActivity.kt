@@ -67,7 +67,7 @@ class AddPostActivity : AppCompatActivity() {
         }
 
         binding.submitPostBtn.setOnClickListener {
-            val caption = binding.postCaptionInput.text.toString().trim()
+            val caption = binding.postCaptionInput.text.toString().trim().replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
             if(caption.isEmpty()){
                 Toast.makeText(this, "Provide a caption", Toast.LENGTH_SHORT).show()
             }
