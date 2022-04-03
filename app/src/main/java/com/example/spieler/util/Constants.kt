@@ -26,6 +26,7 @@ class Constants {
         const val USER_PROFILE_PIC = "profile pic"
         const val USER_ID = "user id"
         const val BLOG_DATA = "blog data"
+        const val BLOG_ID = "blog id"
         const val BLOG_TITLE = "blog TITLE"
         const val BLOG_IMAGE = "blog image"
         const val BLOG_AUTHOR = "blog author"

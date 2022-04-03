@@ -31,16 +31,19 @@ class CommentActivity : AppCompatActivity() {
         supportActionBar?.title = "Comments"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        var blog = intent.getSerializableExtra(Constants.BLOG_DATA) as Blog
+        val blogId = intent.getStringExtra(Constants.BLOG_ID)
         val currentUserId = intent.getStringExtra(Constants.USER_ID)
 
         val repository = Repository()
         viewModelFactory = CommentViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory)[CommentViewModel::class.java]
 
+        viewModel.updateBlog(blogId!!)
         val adapter = CommentAdapter()
-        adapter.submitList(blog.comment)
-        binding.commentsRV.adapter = adapter
+        viewModel.updatedBlog.observe(this){
+            adapter.submitList(it.comment)
+            binding.commentsRV.adapter = adapter
+        }
 
         binding.postComment.setOnClickListener {
             if(binding.enterComment.text.toString().trim().isEmpty()){
@@ -48,7 +51,7 @@ class CommentActivity : AppCompatActivity() {
             }
             else{
                 val commentText = binding.enterComment.text.toString().trim()
-                val commentRequestBody = CommentRequestBody(currentUserId!!, blog._id, commentText)
+                val commentRequestBody = CommentRequestBody(currentUserId!!, blogId, commentText)
                 viewModel.postComment(commentRequestBody)
             }
         }
@@ -56,14 +59,14 @@ class CommentActivity : AppCompatActivity() {
         viewModel.commentResponse.observe(this){
             if(it.isSuccessful){
                 binding.enterComment.text.clear()
-                viewModel.updateBlog(blog._id)
+                viewModel.updateBlog(blogId)
             }
         }
 
-        viewModel.updatedBlog.observe(this){
-            blog = it
-            adapter.submitList(blog.comment)
-        }
+//        viewModel.updatedBlog.observe(this){
+//            blog = it
+//            adapter.submitList(blog.comment)
+//        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

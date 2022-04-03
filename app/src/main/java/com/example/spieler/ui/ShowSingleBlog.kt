@@ -100,7 +100,7 @@ class ShowSingleBlog : AppCompatActivity() {
 
         binding.commentBtn.setOnClickListener {
             Intent(this, CommentActivity::class.java).also{
-                it.putExtra(Constants.BLOG_DATA, blog)
+                it.putExtra(Constants.BLOG_ID, blog._id)
                 it.putExtra(Constants.USER_ID, currentUserId)
                 startActivity(it)
             }
