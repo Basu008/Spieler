@@ -2,18 +2,23 @@ package com.example.spieler.ui
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.spieler.R
 import com.example.spieler.databinding.ActivityAddBlogBinding
+import com.example.spieler.databinding.CustomProgressDialogBinding
 import com.example.spieler.model.PostBlogBody
 import com.example.spieler.model.User
 import com.example.spieler.repository.Repository
@@ -29,6 +34,8 @@ class AddBlogActivity : AppCompatActivity() {
     private lateinit var viewModel: AddBlogViewModel
     private lateinit var viewModelFactory: AddBlogViewModelFactory
     private lateinit var sessionSharedPreferences: SharedPreferences
+    private lateinit var playerNameDialog: AlertDialog.Builder
+    private lateinit var dialog: AlertDialog
     var currFile: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,9 +71,10 @@ class AddBlogActivity : AppCompatActivity() {
             val title = binding.blogHeadingInput.text.toString().trim()
             val body = binding.blogBodyInput.text.toString().trim()
             if(body.isEmpty() || title.isEmpty()){
-                Toast.makeText(this, "Incomplete blog!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Incomplete Article!", Toast.LENGTH_SHORT).show()
             }
             else{
+                createDialog("Uploading your Article")
                 val date = SimpleDateFormat("yyMMddHHmmss", Locale.getDefault()).format(Date())
                 if(currFile != null){
                     viewModel.uploadImageToFirebase(currFile!!, date,
@@ -82,12 +90,9 @@ class AddBlogActivity : AppCompatActivity() {
 
         viewModel.postBlogResponse.observe(this){
             if(it.isSuccessful){
+                dialog.dismiss()
                 Toast.makeText(this, "Blog created", Toast.LENGTH_SHORT).show()
-                binding.uploadImageButton.visibility = View.VISIBLE
-                binding.blogImageUpload.visibility = View.GONE
-                binding.blogHeadingInput.text.clear()
-                binding.blogBodyInput.text.clear()
-
+                finish()
             }
             else{
                 Toast.makeText(this, it.message(), Toast.LENGTH_SHORT).show()
@@ -102,5 +107,19 @@ class AddBlogActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun createDialog(message: String){
+        playerNameDialog = AlertDialog.Builder(this)
+        val newBinding: CustomProgressDialogBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(this),
+            R.layout.custom_progress_dialog, null, false)
+        playerNameDialog.setView(newBinding.root)
+        dialog = playerNameDialog.create()
+        newBinding.message.text = message
+        dialog.setCancelable(false)
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
     }
 }

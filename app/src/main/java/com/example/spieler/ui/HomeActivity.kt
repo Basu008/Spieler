@@ -143,4 +143,8 @@ class HomeActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onRestart() {
+        viewModel.getAllBlogs()
+        super.onRestart()
+    }
 }
