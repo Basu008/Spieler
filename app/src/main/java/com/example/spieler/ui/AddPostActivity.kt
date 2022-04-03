@@ -91,6 +91,7 @@ class AddPostActivity : AppCompatActivity() {
                 dialog.dismiss()
                 Toast.makeText(this, "Blog created", Toast.LENGTH_SHORT).show()
                 Intent(this, HomeActivity::class.java).also {intent ->
+                    intent.putExtra(Constants.USER_DATA, user)
                     startActivity(intent)
                 }
             }

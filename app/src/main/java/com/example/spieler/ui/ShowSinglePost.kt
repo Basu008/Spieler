@@ -3,6 +3,7 @@ package com.example.spieler.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -44,6 +45,7 @@ class ShowSinglePost : AppCompatActivity() {
         viewModel.updateBlog(blogId)
         viewModel.updatedBlog.observe(this){post ->
             binding.postUsername.text = post.author_info.first_name
+            binding.postCaption.text = post.description
             binding.postCreationDate.text = post.created_at
             Glide.with(this)
                 .load(post.author_info.profile_img)
@@ -92,5 +94,14 @@ class ShowSinglePost : AppCompatActivity() {
                 startActivity(it)
             }
         }
+    }
+    
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            android.R.id.home -> {
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
