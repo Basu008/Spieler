@@ -83,7 +83,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             if (response.isSuccessful){
                 Log.d("Login Status", "Successful")
                 val id = response?.body()?.content?.user_id ?: "None"
-                Toast.makeText(requireContext(), response.body()?.content?.token, Toast.LENGTH_SHORT).show()
                 if(id == "None"){
                     dialog.dismiss()
                     Toast.makeText(context, "Can't login, Try again later", Toast.LENGTH_SHORT).show()

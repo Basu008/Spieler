@@ -37,7 +37,7 @@ class BlogAdapter(val user: User) : ListAdapter<Blog, BlogAdapter.BlogViewHolder
             binding.blogDate.text = blog.created_at
             binding.blogLayout.setOnClickListener {
                 Intent(context, ShowSingleBlog::class.java).also {
-                    it.putExtra(Constants.BLOG_DATA, blog)
+                    it.putExtra(Constants.BLOG_ID, blog._id)
                     it.putExtra(Constants.USER_ID, user._id)
                     context.startActivity(it)
                 }

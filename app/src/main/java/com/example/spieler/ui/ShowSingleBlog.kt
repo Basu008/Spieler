@@ -40,36 +40,40 @@ class ShowSingleBlog : AppCompatActivity() {
         ]
 
 
-        val blog = intent.getSerializableExtra(Constants.BLOG_DATA) as Blog
+        val blogId = intent.getStringExtra(Constants.BLOG_ID)!!
         val currentUserId = intent.getStringExtra(Constants.USER_ID)!!
-        val author = "by ${blog.author_info.first_name}"
 
-        blog.likes.forEach {
-            if(it.user_id == currentUserId){
-                binding.likeBtn.setImageResource(R.drawable.liked_24)
-                likeId = it._id
-                blogNotLiked = false
+        viewModel.updateBlog(blogId)
+        viewModel.updatedBlog.observe(this){blog ->
+            val author = "by ${blog.author_info.first_name}"
+            blog.likes.forEach {
+                if(it.user_id == currentUserId){
+                    binding.likeBtn.setImageResource(R.drawable.liked_24)
+                    likeId = it._id
+                    blogNotLiked = false
+                }
             }
+
+            binding.blogViewHeading.text = blog.title
+            if(blog.blog_img != null){
+                Glide.with(this)
+                    .load(blog.blog_img.toUri())
+                    .fitCenter()
+                    .into(binding.singleBlogImage)
+            }
+            else{
+                binding.singleBlogImage.setImageResource(R.drawable.korg)
+            }
+
+            binding.singleBlogAuthor.text = author
+            binding.blogViewBody.text = blog.description
+            binding.blogCreationDate.text = blog.created_at
         }
 
-        binding.blogViewHeading.text = blog.title
-        if(blog.blog_img != null){
-            Glide.with(this)
-                .load(blog.blog_img.toUri())
-                .fitCenter()
-                .into(binding.singleBlogImage)
-        }
-        else{
-            binding.singleBlogImage.setImageResource(R.drawable.korg)
-        }
-
-        binding.singleBlogAuthor.text = author
-        binding.blogViewBody.text = blog.description
-        binding.blogCreationDate.text = blog.created_at
 
         binding.likeBtn.setOnClickListener {
             if(blogNotLiked){
-                viewModel.likeBlog(LikeRequestBody(currentUserId, blog._id))
+                viewModel.likeBlog(LikeRequestBody(currentUserId, blogId))
 //                editor.apply{
 //                    putBoolean(blog._id, true)
 //                    apply()
@@ -87,7 +91,7 @@ class ShowSingleBlog : AppCompatActivity() {
 //                    remove(blog._id)
 //                    apply()
 //                }
-                viewModel.dislikeBlog(likeId, DeleteLikeRequestBody(blog._id))
+                viewModel.dislikeBlog(likeId, DeleteLikeRequestBody(blogId))
                 viewModel.postDisliked.observe(this){
                     if(it.isSuccessful){
 //
@@ -100,7 +104,7 @@ class ShowSingleBlog : AppCompatActivity() {
 
         binding.commentBtn.setOnClickListener {
             Intent(this, CommentActivity::class.java).also{
-                it.putExtra(Constants.BLOG_ID, blog._id)
+                it.putExtra(Constants.BLOG_ID, blogId)
                 it.putExtra(Constants.USER_ID, currentUserId)
                 startActivity(it)
             }

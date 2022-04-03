@@ -4,10 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.spieler.model.DeleteLikeRequestBody
-import com.example.spieler.model.DeleteLikeResponseBody
-import com.example.spieler.model.LikeRequestBody
-import com.example.spieler.model.LikeResponseBody
+import com.example.spieler.model.*
 import com.example.spieler.repository.Repository
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -22,6 +19,11 @@ class SingleBlogViewModel(private val repository: Repository): ViewModel() {
     val postDisliked: LiveData<Response<DeleteLikeResponseBody>>
         get() = _postDisliked
 
+
+    private val _updatedBlog = MutableLiveData<Blog>()
+    val updatedBlog: LiveData<Blog>
+        get() = _updatedBlog
+
     fun likeBlog(likeRequestBody: LikeRequestBody){
         viewModelScope.launch {
             val responseBody = repository.postLike(likeRequestBody)
@@ -33,6 +35,18 @@ class SingleBlogViewModel(private val repository: Repository): ViewModel() {
         viewModelScope.launch {
             val responseBody = repository.deleteLike(id, deleteLikeRequestBody)
             _postDisliked.value = responseBody
+        }
+    }
+
+    fun updateBlog(blogId: String){
+        viewModelScope.launch {
+            val response = repository.getAllBlogs()
+            if(response.isSuccessful){
+                response.body()?.content?.forEach {
+                    if(it._id == blogId)
+                        _updatedBlog.value = it
+                }
+            }
         }
     }
 }

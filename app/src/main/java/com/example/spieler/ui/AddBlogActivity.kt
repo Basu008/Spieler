@@ -55,7 +55,6 @@ class AddBlogActivity : AppCompatActivity() {
 
         val user = intent.getSerializableExtra(Constants.USER_DATA) as User
         val userId: String = user._id
-        Toast.makeText(this, userId, Toast.LENGTH_SHORT).show()
 
         binding.uploadImageButton.setOnClickListener{
             blogImageResult.launch("image/*")
