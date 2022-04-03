@@ -14,6 +14,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
 import com.bumptech.glide.Glide
 import com.example.spieler.R
 import com.example.spieler.adapter.BlogAdapter
@@ -25,6 +27,7 @@ import com.example.spieler.repository.Repository
 import com.example.spieler.util.Constants
 import com.example.spieler.viewmodel.HomeViewModel
 import com.example.spieler.viewmodelfactory.HomeViewModelFactory
+import www.sanju.zoomrecyclerlayout.ZoomRecyclerLayout
 
 class HomeActivity : AppCompatActivity() {
 
@@ -111,7 +114,7 @@ class HomeActivity : AppCompatActivity() {
             }
             true
         }
-
+        setUpRecyclerView()
         val repository = Repository()
         viewModelFactory = HomeViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
@@ -153,5 +156,16 @@ class HomeActivity : AppCompatActivity() {
     override fun onRestart() {
         viewModel.getAllBlogs()
         super.onRestart()
+    }
+
+    private fun setUpRecyclerView() {
+        val linearLayoutManager = ZoomRecyclerLayout(this)
+        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+
+        val snapHelper = LinearSnapHelper()
+        snapHelper.attachToRecyclerView(binding.homePageLayout.postsRV) // Add your recycler view here
+        binding.homePageLayout.postsRV.isNestedScrollingEnabled = false
+
+        binding.homePageLayout.postsRV.layoutManager = linearLayoutManager
     }
 }
