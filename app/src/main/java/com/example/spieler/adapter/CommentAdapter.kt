@@ -44,11 +44,11 @@ class CommentAdapter: ListAdapter<Comment, CommentAdapter.CommentViewHolder>(Com
 
     class CommentDiffUtil: DiffUtil.ItemCallback<Comment>(){
         override fun areItemsTheSame(oldItem: Comment, newItem: Comment): Boolean {
-            TODO("Not yet implemented")
+            return oldItem._id == newItem._id
         }
 
         override fun areContentsTheSame(oldItem: Comment, newItem: Comment): Boolean {
-            TODO("Not yet implemented")
+            return oldItem == newItem
         }
 
     }

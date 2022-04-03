@@ -38,4 +38,5 @@ class Repository {
     suspend fun postComment(commentRequestBody: CommentRequestBody) : Response<CommentResponseBody>{
         return RetrofitInstance.api.postComment(commentRequestBody)
     }
+
 }

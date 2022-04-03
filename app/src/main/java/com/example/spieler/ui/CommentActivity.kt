@@ -1,5 +1,6 @@
 package com.example.spieler.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -22,6 +23,7 @@ class CommentActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCommentBinding
     private lateinit var viewModel: CommentViewModel
     private lateinit var viewModelFactory: CommentViewModelFactory
+//    private var listExist = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +31,7 @@ class CommentActivity : AppCompatActivity() {
         supportActionBar?.title = "Comments"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val blog = intent.getSerializableExtra(Constants.BLOG_DATA) as Blog
+        var blog = intent.getSerializableExtra(Constants.BLOG_DATA) as Blog
         val currentUserId = intent.getStringExtra(Constants.USER_ID)
 
         val repository = Repository()
@@ -37,7 +39,6 @@ class CommentActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, viewModelFactory)[CommentViewModel::class.java]
 
         val adapter = CommentAdapter()
-        Toast.makeText(this, blog.comment.size.toString() , Toast.LENGTH_SHORT).show()
         adapter.submitList(blog.comment)
         binding.commentsRV.adapter = adapter
 
@@ -54,15 +55,21 @@ class CommentActivity : AppCompatActivity() {
 
         viewModel.commentResponse.observe(this){
             if(it.isSuccessful){
-
+                binding.enterComment.text.clear()
+                viewModel.updateBlog(blog._id)
             }
+        }
+
+        viewModel.updatedBlog.observe(this){
+            blog = it
+            adapter.submitList(blog.comment)
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> finish()
-        }
+            }
         return super.onOptionsItemSelected(item)
     }
 }

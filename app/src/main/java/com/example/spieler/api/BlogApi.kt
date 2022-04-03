@@ -44,8 +44,4 @@ interface BlogApi {
         @Body commentRequestBody: CommentRequestBody
     ): Response<CommentResponseBody>
 
-    @GET("comment")
-    suspend fun getComment(
-
-    )
 }
