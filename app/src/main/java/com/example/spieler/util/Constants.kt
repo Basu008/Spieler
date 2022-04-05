@@ -3,6 +3,8 @@ package com.example.spieler.util
 class Constants {
     companion object{
 
+        const val DEFAULT_PIC = "defaultPic"
+
         //url for retrofit api
         const val BASE_URL = "http://15.206.128.93/"
 

@@ -3,105 +3,114 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.ShowSingleBlog">
 
-        <TextView
-            android:id="@+id/blogViewHeading"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:textColor="@color/black"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+                android:id="@+id/blogViewHeading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:textColor="@color/black"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
-        <TextView
-            android:id="@+id/blogCreationDate"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textSize="11sp"
-            android:layout_marginEnd="20dp"
-            android:textAlignment="viewEnd"
-            app:layout_constraintBottom_toBottomOf="@+id/singleBlogAuthor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/singleBlogAuthor"
-            app:layout_constraintTop_toTopOf="@+id/singleBlogAuthor" />
+            <TextView
+                android:id="@+id/blogCreationDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="11sp"
+                android:layout_marginEnd="20dp"
+                android:textAlignment="viewEnd"
+                app:layout_constraintBottom_toBottomOf="@+id/singleBlogAuthor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/singleBlogAuthor"
+                app:layout_constraintTop_toTopOf="@+id/singleBlogAuthor" />
 
-        <ImageView
-            android:id="@+id/singleBlogImage"
-            android:layout_width="0dp"
-            android:layout_height="300dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/image_bg"
-            android:scaleType="fitXY"
-            android:src="@drawable/korg"
-            app:layout_constraintEnd_toEndOf="@id/blogCreationDate"
-            app:layout_constraintStart_toStartOf="@+id/singleBlogAuthor"
-            app:layout_constraintTop_toBottomOf="@+id/singleBlogAuthor" />
+            <ImageView
+                android:id="@+id/singleBlogImage"
+                android:layout_width="0dp"
+                android:layout_height="300dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/image_bg"
+                android:scaleType="fitXY"
+                android:src="@drawable/korg"
+                app:layout_constraintEnd_toEndOf="@id/blogCreationDate"
+                app:layout_constraintStart_toStartOf="@+id/singleBlogAuthor"
+                app:layout_constraintTop_toBottomOf="@+id/singleBlogAuthor" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@+id/singleBlogImage"
-            app:layout_constraintTop_toBottomOf="@+id/singleBlogImage">
-
-            <ImageButton
-                android:id="@+id/likeBtn"
+            <LinearLayout
+                android:id="@+id/linearLayout3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="10dp"
-                android:background="@color/white"
-                android:src="@drawable/unliked_24"
-                tools:ignore="TouchTargetSizeCheck" />
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="@+id/singleBlogImage"
+                app:layout_constraintTop_toBottomOf="@+id/singleBlogImage">
 
-            <ImageButton
-                android:id="@+id/commentBtn"
-                android:layout_width="wrap_content"
+                <ImageButton
+                    android:id="@+id/likeBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/white"
+                    android:src="@drawable/unliked_24"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <ImageButton
+                    android:id="@+id/commentBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/white"
+                    android:src="@drawable/comment_24"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/blogViewBody"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="10dp"
-                android:background="@color/white"
-                android:src="@drawable/comment_24"
-                tools:ignore="TouchTargetSizeCheck" />
+                android:layout_marginTop="5dp"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/singleBlogImage"
+                app:layout_constraintStart_toStartOf="@+id/linearLayout3"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+            <TextView
+                android:id="@+id/singleBlogAuthor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/blogCreationDate"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/blogViewHeading" />
 
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/blogViewBody"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/singleBlogImage"
-            app:layout_constraintStart_toStartOf="@+id/linearLayout3"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
-
-        <TextView
-            android:id="@+id/singleBlogAuthor"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toStartOf="@+id/blogCreationDate"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/blogViewHeading" />
+    </androidx.core.widget.NestedScrollView>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

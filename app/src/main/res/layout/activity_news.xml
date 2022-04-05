@@ -8,39 +8,52 @@
         android:layout_height="match_parent"
         tools:context=".ui.NewsActivity">
 
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/newsShimmerLayout"
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/newsCategoryChipGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:visibility="gone"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp"
+            app:selectionRequired="true"
+            app:checkedChip="@+id/allChip"
+            app:singleSelection="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+            <com.google.android.material.chip.Chip
+                android:id="@+id/allChip"
+                style="@style/CustomChipStyle"
+                android:text="All"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-                <include layout="@layout/blog_item_placeholder" />
-                <include layout="@layout/blog_item_placeholder" />
-                <include layout="@layout/blog_item_placeholder" />
-                <include layout="@layout/blog_item_placeholder" />
-                <include layout="@layout/blog_item_placeholder" />
-                <include layout="@layout/blog_item_placeholder" />
-            </LinearLayout>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/gamesChip"
+                android:layout_width="wrap_content"
+                android:text="Games"
+                style="@style/CustomChipStyle"
+                android:layout_height="wrap_content" />
 
-        </com.facebook.shimmer.ShimmerFrameLayout>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/eSportsChip"
+                android:layout_width="wrap_content"
+                android:text="Esports"
+                style="@style/CustomChipStyle"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.chip.ChipGroup>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/newsRV"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/news_item"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            app:layout_constraintTop_toBottomOf="@+id/newsCategoryChipGroup"
+            tools:listitem="@layout/news_item" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

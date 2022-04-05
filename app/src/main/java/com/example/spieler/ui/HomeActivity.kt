@@ -14,6 +14,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
 import com.bumptech.glide.Glide
 import com.example.spieler.R
 import com.example.spieler.adapter.BlogAdapter
@@ -25,6 +27,9 @@ import com.example.spieler.repository.Repository
 import com.example.spieler.util.Constants
 import com.example.spieler.viewmodel.HomeViewModel
 import com.example.spieler.viewmodelfactory.HomeViewModelFactory
+import www.sanju.zoomrecyclerlayout.ZoomRecyclerLayout
+import java.text.SimpleDateFormat
+import java.util.*
 
 class HomeActivity : AppCompatActivity() {
 
@@ -56,6 +61,7 @@ class HomeActivity : AppCompatActivity() {
         val username = user.first_name
         val email = user.email
         val profilePic = user.profile_img
+        val currDate = SimpleDateFormat("E, LLL dd, yyyy", Locale.getDefault()).format(Date())
 
         //Update data to UI
         val headerLayout = binding.navView.getHeaderView(0)
@@ -73,6 +79,7 @@ class HomeActivity : AppCompatActivity() {
 
         binding.homePageLayout.postsShimmer.startShimmer()
         binding.homePageLayout.recentBlogsShimmer.startShimmer()
+        binding.homePageLayout.todayDate.text = currDate
 
         binding.homePageLayout.addBlogBtn.setOnClickListener {
             Intent(this, AddBlogActivity::class.java).also {
@@ -84,34 +91,10 @@ class HomeActivity : AppCompatActivity() {
         val newsIntent = Intent(this, NewsActivity::class.java)
         newsIntent.putExtra(Constants.USER_DATA, user)
 
-        //On interacting with nav drawer menu
-        binding.navView.setNavigationItemSelectedListener { menuItem ->
-            when (menuItem.itemId){
-                R.id.miYourProfile -> {
-                    Intent(this, ProfileActivity::class.java).also{
-                        it.putExtra(Constants.USER_DATA, user)
-                        startActivity(it)
-                    }
-                }
-                R.id.miNews -> {
-                    startActivity(newsIntent)
-                }
-                R.id.miLogOut -> {
-                    editor.apply {
-                        remove(Constants.USER_ID)
-                        remove(Constants.USER_EMAIL)
-                        remove(Constants.USER_PASSWORD)
-                        apply()
-                    }
-                    Intent(this, MainActivity::class.java).also {
-                        startActivity(it)
-                        finish()
-                    }
-                }
-            }
-            true
-        }
+        val profileIntent = Intent(this, ProfileActivity::class.java)
+        profileIntent.putExtra(Constants.USER_DATA, user)
 
+        setUpRecyclerView()
         val repository = Repository()
         viewModelFactory = HomeViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
@@ -120,6 +103,7 @@ class HomeActivity : AppCompatActivity() {
 
         viewModel.allBlogs.observe(this){response ->
             if(response.isSuccessful){
+                profileIntent.putExtra(Constants.BLOG_DATA, response.body())
                 val blogAdapter = BlogAdapter(user)
                 val postsAdapter = PostsAdapter(user)
                 newsIntent.putExtra(Constants.BLOG_DATA, response.body())
@@ -140,6 +124,31 @@ class HomeActivity : AppCompatActivity() {
                 Toast.makeText(this, response.message(), Toast.LENGTH_SHORT).show()
             }
         }
+
+        //On interacting with nav drawer menu
+        binding.navView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId){
+                R.id.miYourProfile -> {
+                    startActivity(profileIntent)
+                }
+                R.id.miNews -> {
+                    startActivity(newsIntent)
+                }
+                R.id.miLogOut -> {
+                    editor.apply {
+                        remove(Constants.USER_ID)
+                        remove(Constants.USER_EMAIL)
+                        remove(Constants.USER_PASSWORD)
+                        apply()
+                    }
+                    Intent(this, MainActivity::class.java).also {
+                        startActivity(it)
+                        finish()
+                    }
+                }
+            }
+            true
+        }
     }
 
     //To make sure the user can drag as well as tap on the hamburger icon to open nav drawer
@@ -153,5 +162,16 @@ class HomeActivity : AppCompatActivity() {
     override fun onRestart() {
         viewModel.getAllBlogs()
         super.onRestart()
+    }
+
+    private fun setUpRecyclerView() {
+        val linearLayoutManager = ZoomRecyclerLayout(this)
+        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+
+        val snapHelper = LinearSnapHelper()
+        snapHelper.attachToRecyclerView(binding.homePageLayout.postsRV) // Add your recycler view here
+        binding.homePageLayout.postsRV.isNestedScrollingEnabled = false
+
+        binding.homePageLayout.postsRV.layoutManager = linearLayoutManager
     }
 }

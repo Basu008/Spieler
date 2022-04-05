@@ -74,7 +74,7 @@ class SplashScreenActivity : AppCompatActivity() {
             else{
                startMainActivity()
             }
-        }, 3000)
+        }, 2700)
 
     }
 

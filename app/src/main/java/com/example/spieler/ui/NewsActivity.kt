@@ -3,6 +3,7 @@ package com.example.spieler.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.spieler.R
 import com.example.spieler.adapter.NewsAdapter
@@ -27,6 +28,20 @@ class NewsActivity : AppCompatActivity() {
         val adapter = NewsAdapter()
         adapter.submitList(newsList)
         binding.newsRV.adapter = adapter
+        binding.newsCategoryChipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+            checkedIds.forEach {
+                if(it == R.id.allChip){
+                    adapter.submitList(newsList)
+                }
+                if(it == R.id.gamesChip){
+                    adapter.submitList(newsList.filter { it.category == "Games"})
+                }
+                if(it == R.id.eSportsChip){
+                    adapter.submitList(newsList.filter { it.category == "Esports"})
+                }
+            }
+
+        }
 
     }
 

@@ -3,58 +3,66 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.ShowSingleNews">
 
-        <TextView
-            android:id="@+id/newsViewHeading"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:textColor="@color/black"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+                android:id="@+id/newsViewHeading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:textColor="@color/black"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
 
-        <TextView
-            android:id="@+id/newsCreationDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textSize="11sp"
-            android:text="asdsadfasdfasdf"
-            app:layout_constraintStart_toStartOf="@+id/newsViewBody"
-            app:layout_constraintTop_toBottomOf="@+id/newsViewHeading" />
+            <TextView
+                android:id="@+id/newsCreationDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="11sp"
+                android:text="asdsadfasdfasdf"
+                app:layout_constraintStart_toStartOf="@+id/newsViewBody"
+                app:layout_constraintTop_toBottomOf="@+id/newsViewHeading" />
 
-        <ImageView
-            android:id="@+id/singleNewsImage"
-            android:layout_width="0dp"
-            android:layout_height="300dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/image_bg"
-            android:scaleType="fitXY"
-            android:src="@drawable/korg"
-            app:layout_constraintEnd_toEndOf="@+id/newsViewHeading"
-            app:layout_constraintStart_toStartOf="@+id/newsViewHeading"
-            app:layout_constraintTop_toBottomOf="@+id/newsCreationDate" />
-
-
-        <TextView
-            android:id="@+id/newsViewBody"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/singleNewsImage"
-            app:layout_constraintStart_toStartOf="@+id/singleNewsImage"
-            app:layout_constraintTop_toBottomOf="@+id/singleNewsImage" />
+            <ImageView
+                android:id="@+id/singleNewsImage"
+                android:layout_width="0dp"
+                android:layout_height="300dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/image_bg"
+                android:scaleType="fitXY"
+                android:src="@drawable/korg"
+                app:layout_constraintEnd_toEndOf="@+id/newsViewHeading"
+                app:layout_constraintStart_toStartOf="@+id/newsViewHeading"
+                app:layout_constraintTop_toBottomOf="@+id/newsCreationDate" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/newsViewBody"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/singleNewsImage"
+                app:layout_constraintStart_toStartOf="@+id/singleNewsImage"
+                app:layout_constraintTop_toBottomOf="@+id/singleNewsImage" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
 </layout>

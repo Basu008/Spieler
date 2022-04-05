@@ -107,7 +107,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
                 }
                 else{
-                    val user = SignUpRequestBody(firstName, emailText, passwordText, "defaultDP")
+                    val user = SignUpRequestBody(firstName, emailText, passwordText, Constants.DEFAULT_PIC)
                     viewModel.registerUser(user)
                     Log.d("Profile pic Operation", "defaultDP")
                 }
