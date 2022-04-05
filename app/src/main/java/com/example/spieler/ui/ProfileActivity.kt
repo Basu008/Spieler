@@ -55,12 +55,6 @@ class ProfileActivity : AppCompatActivity() {
         binding.yourBlogsShimmer.visibility = View.GONE
         binding.yourBlogsRv.visibility = View.VISIBLE
 
-        binding.addPostBtn.setOnClickListener {
-            Intent(this, AddPostActivity::class.java).also {
-                it.putExtra(Constants.USER_DATA, user)
-                startActivity(it)
-            }
-        }
 
     }
 

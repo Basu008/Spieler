@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -41,6 +43,13 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var viewModelFactory: HomeViewModelFactory
 
     private lateinit var news: List<Blog>
+
+    private val rotateOpen: Animation by lazy{ AnimationUtils.loadAnimation(this, R.anim.rotate_open_anim) }
+    private val rotateClose: Animation by lazy{ AnimationUtils.loadAnimation(this, R.anim.rotate_close_anim) }
+    private val fromBottom: Animation by lazy{ AnimationUtils.loadAnimation(this, R.anim.from_bottom_anim) }
+    private val toBottom: Animation by lazy{ AnimationUtils.loadAnimation(this, R.anim.to_bottom_anim) }
+
+    private var clicked = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,8 +90,19 @@ class HomeActivity : AppCompatActivity() {
         binding.homePageLayout.recentBlogsShimmer.startShimmer()
         binding.homePageLayout.todayDate.text = currDate
 
-        binding.homePageLayout.addBlogBtn.setOnClickListener {
+        binding.homePageLayout.addBtn.setOnClickListener {
+            onAddButtonClicked()
+        }
+
+        binding.homePageLayout.addBlog.setOnClickListener {
             Intent(this, AddBlogActivity::class.java).also {
+                it.putExtra(Constants.USER_DATA, user)
+                startActivity(it)
+            }
+        }
+
+        binding.homePageLayout.addPost.setOnClickListener {
+            Intent(this, AddPostActivity::class.java).also {
                 it.putExtra(Constants.USER_DATA, user)
                 startActivity(it)
             }
@@ -148,6 +168,36 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
             true
+        }
+    }
+
+    private fun onAddButtonClicked() {
+        setVisibility(clicked)
+        setAnimation(clicked)
+        clicked = !clicked
+    }
+
+    private fun setAnimation(clicked: Boolean) {
+        if(!clicked){
+            binding.homePageLayout.addPost.startAnimation(fromBottom)
+            binding.homePageLayout.addBlog.startAnimation(fromBottom)
+            binding.homePageLayout.addBtn.startAnimation(rotateOpen)
+        }
+        else {
+            binding.homePageLayout.addPost.startAnimation(toBottom)
+            binding.homePageLayout.addBlog.startAnimation(toBottom)
+            binding.homePageLayout.addBtn.startAnimation(rotateClose)
+        }
+    }
+
+    private fun setVisibility(clicked: Boolean) {
+        if (!clicked){
+            binding.homePageLayout.addBlog.visibility =View.VISIBLE
+            binding.homePageLayout.addPost.visibility =View.VISIBLE
+        }
+        else{
+            binding.homePageLayout.addBlog.visibility =View.INVISIBLE
+            binding.homePageLayout.addPost.visibility =View.INVISIBLE
         }
     }
 
