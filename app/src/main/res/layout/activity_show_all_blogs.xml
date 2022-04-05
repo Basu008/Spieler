@@ -8,5 +8,39 @@
         android:layout_height="match_parent"
         tools:context=".ui.ShowAllBlogsActivity">
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/blogSearchInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="40dp"
+            android:hint="Search for a Blog"
+            android:textColorHint="@color/main_theme_color"
+            app:startIconDrawable="@drawable/ic_baseline_search_24"
+            app:startIconTint="@color/main_theme_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/blogSearchInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/main_theme_color"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/allBlogsRV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/blogSearchInputLayout" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

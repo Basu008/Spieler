@@ -157,12 +157,11 @@ class HomeActivity : AppCompatActivity() {
         //On interacting with nav drawer menu
         binding.navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId){
-                R.id.miYourProfile -> {
-                    startActivity(profileIntent)
-                }
-                R.id.miNews -> {
-                    startActivity(newsIntent)
-                }
+                R.id.miYourProfile -> startActivity(profileIntent)
+                R.id.miNews -> startActivity(newsIntent)
+                R.id.miAllBlogs -> startActivity(allBlogsIntent)
+                R.id.miAllPosts -> startActivity(allPostsIntent)
+                R.id.miAllUsers -> startActivity(allUsersIntent)
                 R.id.miLogOut -> {
                     editor.apply {
                         remove(Constants.USER_ID)
@@ -174,9 +173,6 @@ class HomeActivity : AppCompatActivity() {
                         startActivity(it)
                         finish()
                     }
-                }
-                R.id.miAllBlogs -> {
-                    Intent()
                 }
             }
             true
