@@ -109,10 +109,16 @@ class HomeActivity : AppCompatActivity() {
         }
 
         val newsIntent = Intent(this, NewsActivity::class.java)
-        newsIntent.putExtra(Constants.USER_DATA, user)
-
         val profileIntent = Intent(this, ProfileActivity::class.java)
+        val allBlogsIntent = Intent(this, ShowAllBlogsActivity::class.java)
+        val allPostsIntent = Intent(this, ShowAllPostsActivity::class.java)
+        val allUsersIntent = Intent(this, ShowAllUsersActivity::class.java)
+        newsIntent.putExtra(Constants.USER_DATA, user)
         profileIntent.putExtra(Constants.USER_DATA, user)
+        allBlogsIntent.putExtra(Constants.USER_DATA, user)
+        allPostsIntent.putExtra(Constants.USER_DATA, user)
+        allUsersIntent.putExtra(Constants.USER_DATA, user)
+
 
         setUpRecyclerView()
         val repository = Repository()
@@ -124,6 +130,9 @@ class HomeActivity : AppCompatActivity() {
         viewModel.allBlogs.observe(this){response ->
             if(response.isSuccessful){
                 profileIntent.putExtra(Constants.BLOG_DATA, response.body())
+                allBlogsIntent.putExtra(Constants.BLOG_DATA, response.body())
+                allPostsIntent.putExtra(Constants.BLOG_DATA, response.body())
+                allUsersIntent.putExtra(Constants.BLOG_DATA, response.body())
                 val blogAdapter = BlogAdapter(user)
                 val postsAdapter = PostsAdapter(user)
                 newsIntent.putExtra(Constants.BLOG_DATA, response.body())
@@ -165,6 +174,9 @@ class HomeActivity : AppCompatActivity() {
                         startActivity(it)
                         finish()
                     }
+                }
+                R.id.miAllBlogs -> {
+                    Intent()
                 }
             }
             true
