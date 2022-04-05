@@ -11,7 +11,7 @@
         <View
             android:id="@+id/view"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="80dp"
             android:background="@color/main_theme_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -22,24 +22,10 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:src="@drawable/user"
-            android:layout_marginTop="90dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <!--    <ImageButton-->
-        <!--        android:id="@+id/editProfilePic"-->
-        <!--        android:layout_width="48dp"-->
-        <!--        android:layout_height="48dp"-->
-        <!--        android:background="@drawable/add_blog_btn_bg"-->
-        <!--        android:elevation="40dp"-->
-        <!--        android:padding="0dp"-->
-        <!--        android:src="@drawable/edit"-->
-        <!--        android:textAlignment="center"-->
-        <!--        android:textColor="@color/white"-->
-        <!--        android:textSize="25sp"-->
-        <!--        app:layout_constraintBottom_toBottomOf="@+id/profile_dp"-->
-        <!--        app:layout_constraintEnd_toEndOf="@+id/profile_dp" />-->
 
         <TextView
             android:id="@+id/profile_username"
@@ -64,56 +50,64 @@
             app:layout_constraintStart_toStartOf="@+id/profile_dp"
             app:layout_constraintTop_toBottomOf="@+id/profile_username" />
 
-        <TextView
-            android:id="@+id/your_articles_heading"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/listCategory"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:fontFamily="@font/segoeui"
-            android:text="Your Posts"
-            android:textColor="@color/black"
-            android:textSize="26sp"
-            android:layout_marginTop="80dp"
-            android:textStyle="bold"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_email" />
+            app:layout_constraintTop_toBottomOf="@+id/profile_email">
+
+            <TextView
+                android:id="@+id/postOptionHeading"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/segoeui"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:background="@drawable/profile_heading_bg"
+                android:text="Posts"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profile_email" />
+
+            <TextView
+                android:id="@+id/blogOptionHeading"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/segoeui"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:text="Blogs"
+                android:background="@drawable/profile_heading_bg"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profile_email" />
+        </LinearLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/yourBlogsRv"
+            android:id="@+id/yourUploadsRV"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="10dp"
             android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/your_articles_heading"
-            android:visibility="gone" />
-
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/yourBlogsShimmer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/your_articles_heading">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <include layout="@layout/own_post_item_placeholder" />
-
-                <include layout="@layout/own_post_item_placeholder" />
+            app:layout_constraintTop_toBottomOf="@id/listCategory"
+            tools:listitem="@layout/own_post_item_placeholder"
+             />
 
 
-            </LinearLayout>
-
-        </com.facebook.shimmer.ShimmerFrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

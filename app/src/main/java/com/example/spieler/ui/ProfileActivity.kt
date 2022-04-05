@@ -1,27 +1,24 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.spieler.ui
 
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.example.spieler.R
-import com.example.spieler.adapter.OwnPostsAdapter
+import com.example.spieler.adapter.OwnUploadsAdapter
 import com.example.spieler.databinding.ActivityProfileBinding
 import com.example.spieler.model.BlogResponseBody
 import com.example.spieler.model.User
 import com.example.spieler.util.Constants
-import www.sanju.zoomrecyclerlayout.ZoomRecyclerLayout
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,19 +26,24 @@ class ProfileActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = ""
         supportActionBar?.elevation = 0f
-        binding.yourBlogsShimmer.startShimmer()
-        setUpRecyclerView()
 
         val user = intent.getSerializableExtra(Constants.USER_DATA) as User
         val blogs = intent.getSerializableExtra(Constants.BLOG_DATA) as BlogResponseBody
 
+        val uploads = blogs.content.filter { it.tag != "NEWS" && it.author_info._id == user._id}
+        val ownBlogs = uploads.filter { it.tag == "BLOG" }
+        val ownPosts = uploads.filter { it.tag == "POST" }
+
         val username = user.first_name
         val email = user.email
         val profilePic = user.profile_img
-        val adapter = OwnPostsAdapter(user)
-        val posts = blogs.content.filter { it.tag != "NEWS" }
-        adapter.submitList(posts.filter { it.author_info._id == user._id })
-        binding.yourBlogsRv.adapter = adapter
+        val adapter = OwnUploadsAdapter(user)
+
+        setPostsTab()
+        adapter.submitList(ownPosts)
+        binding.yourUploadsRV.layoutManager = GridLayoutManager(this, 2)
+        binding.yourUploadsRV.adapter = adapter
+
 
         binding.profileUsername.text = username
         binding.profileEmail.text = email
@@ -51,11 +53,29 @@ class ProfileActivity : AppCompatActivity() {
             .placeholder(R.drawable.user)
             .into(binding.profileDp)
 
-        binding.yourBlogsShimmer.stopShimmer()
-        binding.yourBlogsShimmer.visibility = View.GONE
-        binding.yourBlogsRv.visibility = View.VISIBLE
+        binding.postOptionHeading.setOnClickListener {
+            setPostsTab()
+            adapter.submitList(ownPosts)
+        }
 
+        binding.blogOptionHeading.setOnClickListener {
+            setBlogsTab()
+            adapter.submitList(ownBlogs)
+        }
+    }
 
+    private fun setPostsTab(){
+        binding.postOptionHeading.setTextColor(resources.getColor(R.color.white))
+        binding.postOptionHeading.setBackgroundResource(R.drawable.profile_heading_selected_bg)
+        binding.blogOptionHeading.setTextColor(resources.getColor(R.color.black))
+        binding.blogOptionHeading.setBackgroundResource(R.drawable.profile_heading_bg)
+    }
+
+    private fun setBlogsTab(){
+        binding.blogOptionHeading.setTextColor(resources.getColor(R.color.white))
+        binding.blogOptionHeading.setBackgroundResource(R.drawable.profile_heading_selected_bg)
+        binding.postOptionHeading.setTextColor(resources.getColor(R.color.black))
+        binding.postOptionHeading.setBackgroundResource(R.drawable.profile_heading_bg)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -65,14 +85,5 @@ class ProfileActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun setUpRecyclerView() {
-        val linearLayoutManager = ZoomRecyclerLayout(this)
-        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
 
-        val snapHelper = LinearSnapHelper()
-        snapHelper.attachToRecyclerView(binding.yourBlogsRv) // Add your recycler view here
-        binding.yourBlogsRv.isNestedScrollingEnabled = false
-
-        binding.yourBlogsRv.layoutManager = linearLayoutManager
-    }
 }
