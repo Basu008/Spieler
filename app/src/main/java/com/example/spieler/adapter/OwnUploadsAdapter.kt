@@ -7,16 +7,15 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.spieler.databinding.OwnPostItemBinding
-import com.example.spieler.databinding.PopularBlogItemBinding
+import com.example.spieler.databinding.OwnUploadItemBinding
 import com.example.spieler.model.Blog
 import com.example.spieler.model.User
 import com.example.spieler.ui.ShowSinglePost
 import com.example.spieler.util.Constants
 
-class OwnPostsAdapter(private val user: User): ListAdapter<Blog, OwnPostsAdapter.OwnPostViewHolder>(OwnPostDiffUtil()) {
+class OwnUploadsAdapter(private val user: User): ListAdapter<Blog, OwnUploadsAdapter.OwnUploadViewHolder>(OwnPostDiffUtil()) {
 
-    class OwnPostViewHolder(val binding: OwnPostItemBinding): RecyclerView.ViewHolder(binding.root){
+    class OwnUploadViewHolder(val binding: OwnUploadItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(blog: Blog, user: User){
             val context = binding.root.context
             Glide.with(context)
@@ -32,30 +31,30 @@ class OwnPostsAdapter(private val user: User): ListAdapter<Blog, OwnPostsAdapter
         }
 
         companion object{
-            fun from(parent: ViewGroup): OwnPostViewHolder{
+            fun from(parent: ViewGroup): OwnUploadViewHolder{
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = OwnPostItemBinding.inflate(layoutInflater, parent, false)
-                return OwnPostViewHolder(binding)
+                val binding = OwnUploadItemBinding.inflate(layoutInflater, parent, false)
+                return OwnUploadViewHolder(binding)
             }
         }
     }
 
     class OwnPostDiffUtil: DiffUtil.ItemCallback<Blog>(){
         override fun areItemsTheSame(oldItem: Blog, newItem: Blog): Boolean {
-            TODO("Not yet implemented")
+           return oldItem._id == newItem._id
         }
 
         override fun areContentsTheSame(oldItem: Blog, newItem: Blog): Boolean {
-            TODO("Not yet implemented")
+            return oldItem == newItem
         }
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OwnPostViewHolder {
-        return OwnPostViewHolder.from(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OwnUploadViewHolder {
+        return OwnUploadViewHolder.from(parent)
     }
 
-    override fun onBindViewHolder(holder: OwnPostViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: OwnUploadViewHolder, position: Int) {
         val post = getItem(position)
         holder.bind(post, user)
     }
