@@ -8,29 +8,33 @@
         android:layout_height="match_parent"
         tools:context=".ui.ShowAllBlogsActivity">
 
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
             android:id="@+id/blogSearchInputLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="40dp"
-            android:hint="Search for a Blog"
-            android:textColorHint="@color/main_theme_color"
-            app:startIconDrawable="@drawable/ic_baseline_search_24"
-            app:startIconTint="@color/main_theme_color"
+            android:layout_margin="20dp"
+            android:padding="5dp"
+            android:background="@drawable/search_field_bg"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/ic_baseline_search_24"/>
+
+            <EditText
                 android:id="@+id/blogSearchInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/main_theme_color"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginEnd="4dp"
+                android:maxLines="1"
+                android:hint="Seach for a blog"/>
+
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/allBlogsRV"

@@ -2,7 +2,10 @@ package com.example.spieler.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.spieler.R
 import com.example.spieler.adapter.BlogAdapter
@@ -26,8 +29,28 @@ class ShowAllBlogsActivity : AppCompatActivity() {
         val blogs = intent.getSerializableExtra(Constants.BLOG_DATA) as BlogResponseBody
 
         val blogAdapter = BlogAdapter(user)
-        blogAdapter.submitList(blogs.content.filter { it.tag == "BLOG" })
+        val ownBlogs = blogs.content.filter { it.tag == "BLOG" }
+            .sortedByDescending { it.created_at }
+        blogAdapter.submitList(ownBlogs)
         binding.allBlogsRV.adapter = blogAdapter
+
+        binding.blogSearchInput.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                blogAdapter.submitList(ownBlogs.filter { it.description.contains(p0!!, true)
+                        || it.title.contains(p0, true)})
+
+                if(p0.isNullOrBlank()){
+                    blogAdapter.submitList(ownBlogs)
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
