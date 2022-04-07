@@ -22,6 +22,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
     var user: User? =  null
     var blogs: BlogResponseBody? = null
+    var currentUsedId: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +33,7 @@ class ProfileActivity : AppCompatActivity() {
         supportActionBar?.elevation = 0f
 
         user = intent.getSerializableExtra(Constants.USER_DATA) as User
+        currentUsedId = intent.getStringExtra(Constants.USER_ID)
         blogs = intent.getSerializableExtra(Constants.BLOG_DATA) as BlogResponseBody
 
         val uploads = blogs?.content?.filter { it.tag != "NEWS" && it.author_info._id == user?._id}
@@ -104,7 +106,9 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.edit_menu, menu)
+        if(currentUsedId == user?._id){
+            menuInflater.inflate(R.menu.edit_menu, menu)
+        }
         return true
     }
 

@@ -114,6 +114,7 @@ class HomeActivity : AppCompatActivity() {
 
         val profileIntent = Intent(this, ProfileActivity::class.java)
         profileIntent.putExtra(Constants.USER_DATA, user)
+        profileIntent.putExtra(Constants.USER_ID, user?._id)
 
         setUpRecyclerView()
         val repository = Repository()
