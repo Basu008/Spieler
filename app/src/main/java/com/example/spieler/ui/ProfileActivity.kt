@@ -84,7 +84,13 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            android.R.id.home -> finish()
+            android.R.id.home -> {
+                Intent(this, HomeActivity::class.java).also {
+                    it.putExtra(Constants.USER_DATA, user)
+                    startActivity(it)
+                    finish()
+                }
+            }
             R.id.miEdit ->  {
                 Intent(this, EditProfileActivity::class.java).also {
                     it.putExtra(Constants.USER_DATA, user)
@@ -100,5 +106,14 @@ class ProfileActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.edit_menu, menu)
         return true
+    }
+
+    override fun onBackPressed() {
+        Intent(this, HomeActivity::class.java).also {
+            it.putExtra(Constants.USER_DATA, user)
+            it.putExtra(Constants.BLOG_DATA, blogs)
+            startActivity(it)
+            finish()
+        }
     }
 }
