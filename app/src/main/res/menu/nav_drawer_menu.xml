@@ -5,7 +5,10 @@
         android:id="@+id/miNews"
         android:title="News"
         android:icon="@drawable/news"/>
-
+    <item
+        android:id="@+id/miAllUsers"
+        android:title="All Users"
+        android:icon="@drawable/person_24"/>
     <item
         android:id="@+id/miYourProfile"
         android:title="Profile"

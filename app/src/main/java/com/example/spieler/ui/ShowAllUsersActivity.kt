@@ -3,6 +3,7 @@ package com.example.spieler.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.SyncStateContract
+import android.view.MenuItem
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.spieler.R
@@ -23,6 +24,9 @@ class ShowAllUsersActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_show_all_users)
+        supportActionBar?.elevation = 0f
+        supportActionBar?.title = ""
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val repository = Repository()
         viewModelFactory = AllUsersViewModelFactory(repository)
@@ -41,5 +45,12 @@ class ShowAllUsersActivity : AppCompatActivity() {
                 adapter.submitList(users)
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

@@ -10,12 +10,14 @@
 
         <ImageView
             android:id="@+id/otherUserDP"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="10dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:scaleType="fitXY"
             android:src="@drawable/korg_something"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:textStyle="bold"
             android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
@@ -38,10 +40,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="10dp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/otherUserDP"
             app:layout_constraintStart_toEndOf="@+id/otherUserDP"
             app:layout_constraintTop_toBottomOf="@+id/otherUserUsername"
-            tools:text="Followers: 2" />
+            android:text="Followers: 2" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -49,7 +52,7 @@
             android:background="@drawable/unfollow_bg"
             android:padding="10dp"
             android:text="UNFOLLOW"
-            android:textSize="15sp"
+            android:textSize="12sp"
             android:layout_marginEnd="10dp"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/otherUserFollowers"
