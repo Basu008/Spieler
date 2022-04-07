@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Spieler"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.EditProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.ShowAllBlogsActivity"
             android:exported="false" />
         <activity

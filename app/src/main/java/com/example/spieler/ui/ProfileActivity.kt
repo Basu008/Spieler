@@ -2,6 +2,7 @@
 
 package com.example.spieler.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -19,6 +20,7 @@ import com.example.spieler.util.Constants
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
+    var user: User? =  null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,17 +30,17 @@ class ProfileActivity : AppCompatActivity() {
         supportActionBar?.title = ""
         supportActionBar?.elevation = 0f
 
-        val user = intent.getSerializableExtra(Constants.USER_DATA) as User
+        user = intent.getSerializableExtra(Constants.USER_DATA) as User
         val blogs = intent.getSerializableExtra(Constants.BLOG_DATA) as BlogResponseBody
 
-        val uploads = blogs.content.filter { it.tag != "NEWS" && it.author_info._id == user._id}
+        val uploads = blogs.content.filter { it.tag != "NEWS" && it.author_info._id == user?._id}
         val ownBlogs = uploads.filter { it.tag == "BLOG" }
         val ownPosts = uploads.filter { it.tag == "POST" }
 
-        val username = user.first_name
-        val email = user.email
-        val profilePic = user.profile_img
-        val adapter = OwnUploadsAdapter(user)
+        val username = user?.first_name
+        val email = user?.email
+        val profilePic = user?.profile_img
+        val adapter = OwnUploadsAdapter(user!!)
 
         setPostsTab()
         adapter.submitList(ownPosts)
@@ -49,7 +51,7 @@ class ProfileActivity : AppCompatActivity() {
         binding.profileUsername.text = username
         binding.profileEmail.text = email
         Glide.with(this)
-            .load(profilePic.toUri())
+            .load(profilePic?.toUri())
             .circleCrop()
             .placeholder(R.drawable.user)
             .into(binding.profileDp)
@@ -82,6 +84,12 @@ class ProfileActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> finish()
+            R.id.miEdit ->  {
+                Intent(this, EditProfileActivity::class.java).also {
+                    it.putExtra(Constants.USER_DATA, user)
+                    startActivity(it)
+                }
+            }
         }
         return super.onOptionsItemSelected(item)
     }
