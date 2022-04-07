@@ -40,6 +40,7 @@
         <entry key="app/src/main/res/layout/activity_add_blog.xml" value="0.3104166666666667" />
         <entry key="app/src/main/res/layout/activity_add_post.xml" value="0.3104166666666667" />
         <entry key="app/src/main/res/layout/activity_comment.xml" value="0.3104166666666667" />
+        <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.296875" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.3104166666666667" />
         <entry key="app/src/main/res/layout/activity_news.xml" value="0.3104166666666667" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.3104166666666667" />
@@ -55,7 +56,9 @@
         <entry key="app/src/main/res/layout/own_post_item_placeholder.xml" value="0.3104166666666667" />
         <entry key="app/src/main/res/layout/own_upload_item.xml" value="0.3104166666666667" />
         <entry key="app/src/main/res/layout/popular_blog_item.xml" value="0.3104166666666667" />
+        <entry key="app/src/main/res/menu/edit_menu.xml" value="0.3104166666666667" />
         <entry key="app/src/main/res/menu/nav_drawer_menu.xml" value="0.3104166666666667" />
+        <entry key="app/src/main/res/menu/submit_changes_menu.xml" value="0.3104166666666667" />
       </map>
     </option>
   </component>

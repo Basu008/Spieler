@@ -39,4 +39,8 @@ class Repository {
         return RetrofitInstance.api.postComment(commentRequestBody)
     }
 
+    suspend fun updateUser(id: String, updateUser: UpdateUser): Response<UpdateUserResponse>{
+        return RetrofitInstance.api.updateUser(id,updateUser)
+    }
+
 }

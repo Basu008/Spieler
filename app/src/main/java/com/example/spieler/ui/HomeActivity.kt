@@ -44,6 +44,7 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var news: List<Blog>
 
+    private var user: User? = null
     private val rotateOpen: Animation by lazy{ AnimationUtils.loadAnimation(this, R.anim.rotate_open_anim) }
     private val rotateClose: Animation by lazy{ AnimationUtils.loadAnimation(this, R.anim.rotate_close_anim) }
     private val fromBottom: Animation by lazy{ AnimationUtils.loadAnimation(this, R.anim.from_bottom_anim) }
@@ -65,11 +66,11 @@ class HomeActivity : AppCompatActivity() {
         sessionSharedPreferences = getSharedPreferences(Constants.USER_SESSION, Context.MODE_PRIVATE)
         editor = sessionSharedPreferences.edit()
 
-        val user = intent.getSerializableExtra(Constants.USER_DATA) as User
-        val userId = user._id
-        val username = user.first_name
-        val email = user.email
-        val profilePic = user.profile_img
+        user = intent.getSerializableExtra(Constants.USER_DATA) as User
+        val userId = user?._id
+        val username = user?.first_name
+        val email = user?.email
+        val profilePic = user?.profile_img
         val currDate = SimpleDateFormat("E, LLL dd, yyyy", Locale.getDefault()).format(Date())
 
         //Update data to UI
@@ -79,7 +80,7 @@ class HomeActivity : AppCompatActivity() {
         val headerEmail: TextView = headerLayout.findViewById(R.id.email_navDrawer)
 
         Glide.with(this)
-            .load(profilePic.toUri())
+            .load(profilePic?.toUri())
             .circleCrop()
             .placeholder(R.drawable.user)
             .into(headerProfilePic)
@@ -124,8 +125,8 @@ class HomeActivity : AppCompatActivity() {
         viewModel.allBlogs.observe(this){response ->
             if(response.isSuccessful){
                 profileIntent.putExtra(Constants.BLOG_DATA, response.body())
-                val blogAdapter = BlogAdapter(user)
-                val postsAdapter = PostsAdapter(user)
+                val blogAdapter = BlogAdapter(user!!)
+                val postsAdapter = PostsAdapter(user!!)
                 newsIntent.putExtra(Constants.BLOG_DATA, response.body())
                 val blogs = response.body()?.content?.sortedByDescending { it.created_at }!!
                 blogAdapter.submitList(blogs.filter { it.tag == "BLOG" })

@@ -2,8 +2,10 @@
 
 package com.example.spieler.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
@@ -18,6 +20,8 @@ import com.example.spieler.util.Constants
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
+    var user: User? =  null
+    var blogs: BlogResponseBody? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,17 +31,17 @@ class ProfileActivity : AppCompatActivity() {
         supportActionBar?.title = ""
         supportActionBar?.elevation = 0f
 
-        val user = intent.getSerializableExtra(Constants.USER_DATA) as User
-        val blogs = intent.getSerializableExtra(Constants.BLOG_DATA) as BlogResponseBody
+        user = intent.getSerializableExtra(Constants.USER_DATA) as User
+        blogs = intent.getSerializableExtra(Constants.BLOG_DATA) as BlogResponseBody
 
-        val uploads = blogs.content.filter { it.tag != "NEWS" && it.author_info._id == user._id}
-        val ownBlogs = uploads.filter { it.tag == "BLOG" }
-        val ownPosts = uploads.filter { it.tag == "POST" }
+        val uploads = blogs?.content?.filter { it.tag != "NEWS" && it.author_info._id == user?._id}
+        val ownBlogs = uploads?.filter { it.tag == "BLOG" }
+        val ownPosts = uploads?.filter { it.tag == "POST" }
 
-        val username = user.first_name
-        val email = user.email
-        val profilePic = user.profile_img
-        val adapter = OwnUploadsAdapter(user)
+        val username = user?.first_name
+        val email = user?.email
+        val profilePic = user?.profile_img
+        val adapter = OwnUploadsAdapter(user!!)
 
         setPostsTab()
         adapter.submitList(ownPosts)
@@ -48,7 +52,7 @@ class ProfileActivity : AppCompatActivity() {
         binding.profileUsername.text = username
         binding.profileEmail.text = email
         Glide.with(this)
-            .load(profilePic.toUri())
+            .load(profilePic?.toUri())
             .circleCrop()
             .placeholder(R.drawable.user)
             .into(binding.profileDp)
@@ -80,10 +84,36 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            android.R.id.home -> finish()
+            android.R.id.home -> {
+                Intent(this, HomeActivity::class.java).also {
+                    it.putExtra(Constants.USER_DATA, user)
+                    startActivity(it)
+                    finish()
+                }
+            }
+            R.id.miEdit ->  {
+                Intent(this, EditProfileActivity::class.java).also {
+                    it.putExtra(Constants.USER_DATA, user)
+                    it.putExtra(Constants.BLOG_DATA, blogs)
+                    startActivity(it)
+                    finish()
+                }
+            }
         }
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.edit_menu, menu)
+        return true
+    }
 
+    override fun onBackPressed() {
+        Intent(this, HomeActivity::class.java).also {
+            it.putExtra(Constants.USER_DATA, user)
+            it.putExtra(Constants.BLOG_DATA, blogs)
+            startActivity(it)
+            finish()
+        }
+    }
 }
