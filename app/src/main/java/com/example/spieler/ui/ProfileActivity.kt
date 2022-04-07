@@ -21,6 +21,7 @@ import com.example.spieler.util.Constants
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
     var user: User? =  null
+    var blogs: BlogResponseBody? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,11 +32,11 @@ class ProfileActivity : AppCompatActivity() {
         supportActionBar?.elevation = 0f
 
         user = intent.getSerializableExtra(Constants.USER_DATA) as User
-        val blogs = intent.getSerializableExtra(Constants.BLOG_DATA) as BlogResponseBody
+        blogs = intent.getSerializableExtra(Constants.BLOG_DATA) as BlogResponseBody
 
-        val uploads = blogs.content.filter { it.tag != "NEWS" && it.author_info._id == user?._id}
-        val ownBlogs = uploads.filter { it.tag == "BLOG" }
-        val ownPosts = uploads.filter { it.tag == "POST" }
+        val uploads = blogs?.content?.filter { it.tag != "NEWS" && it.author_info._id == user?._id}
+        val ownBlogs = uploads?.filter { it.tag == "BLOG" }
+        val ownPosts = uploads?.filter { it.tag == "POST" }
 
         val username = user?.first_name
         val email = user?.email
@@ -87,7 +88,9 @@ class ProfileActivity : AppCompatActivity() {
             R.id.miEdit ->  {
                 Intent(this, EditProfileActivity::class.java).also {
                     it.putExtra(Constants.USER_DATA, user)
+                    it.putExtra(Constants.BLOG_DATA, blogs)
                     startActivity(it)
+                    finish()
                 }
             }
         }

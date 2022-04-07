@@ -44,4 +44,10 @@ interface BlogApi {
         @Body commentRequestBody: CommentRequestBody
     ): Response<CommentResponseBody>
 
+    @PUT("person/{id}")
+    suspend fun updateUser(
+        @Path("id") id: String,
+        @Body updateUser: UpdateUser
+    ): Response<UpdateUserResponse>
+
 }
