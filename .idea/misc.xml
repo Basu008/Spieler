@@ -37,6 +37,7 @@
         <entry key="app/src/main/res/drawable/posts_24.xml" value="0.1875" />
         <entry key="app/src/main/res/drawable/profile_heading_bg.xml" value="0.1875" />
         <entry key="app/src/main/res/drawable/send.xml" value="0.1875" />
+        <entry key="app/src/main/res/drawable/unfollow_bg.xml" value="0.1875" />
         <entry key="app/src/main/res/layout/activity_add_blog.xml" value="0.3104166666666667" />
         <entry key="app/src/main/res/layout/activity_add_post.xml" value="0.3104166666666667" />
         <entry key="app/src/main/res/layout/activity_comment.xml" value="0.3104166666666667" />

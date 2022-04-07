@@ -42,7 +42,7 @@
                 android:layout_width="0dp"
                 android:layout_height="300dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/image_bg"
+                android:background="@drawable/follow_bg"
                 android:scaleType="fitXY"
                 android:src="@drawable/korg"
                 app:layout_constraintEnd_toEndOf="@+id/newsViewHeading"
