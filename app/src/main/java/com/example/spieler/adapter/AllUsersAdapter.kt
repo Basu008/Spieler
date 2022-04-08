@@ -1,6 +1,8 @@
 package com.example.spieler.adapter
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.provider.SyncStateContract
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -20,6 +22,7 @@ class AllUsersAdapter(private val blogResponseBody: BlogResponseBody, private va
     :ListAdapter<User, AllUsersAdapter.AllUsersViewHolder>(AllUsersDiffUtil()){
 
     class AllUsersViewHolder(private val binding:SingleUserItemBinding): RecyclerView.ViewHolder(binding.root){
+        @SuppressLint("ResourceAsColor")
         fun bind(user: User, blogResponseBody: BlogResponseBody, currentUserId: String){
             binding.otherUserUsername.text = user.first_name
             Glide.with(binding.root.context)
@@ -33,6 +36,18 @@ class AllUsersAdapter(private val blogResponseBody: BlogResponseBody, private va
                     it.putExtra(Constants.USER_ID, currentUserId)
                     it.putExtra(Constants.BLOG_DATA, blogResponseBody)
                     binding.root.context.startActivity(it)
+                }
+            }
+            binding.followButton.setOnClickListener {
+                if(binding.followButton.text.toString() == "UNFOLLOW"){
+                    binding.followButton.setBackgroundResource(R.drawable.follow_bg)
+                    binding.followButton.setText("FOLLOW")
+                    binding.followButton.setTextColor(R.color.main_theme_color)
+                }
+                else{
+                    binding.followButton.setBackgroundResource(R.drawable.unfollow_bg)
+                    binding.followButton.setText("UNFOLLOW")
+                    binding.followButton.setTextColor(Color.WHITE)
                 }
             }
         }

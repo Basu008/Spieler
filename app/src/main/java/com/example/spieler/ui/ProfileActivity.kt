@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
@@ -87,9 +88,15 @@ class ProfileActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
-                Intent(this, HomeActivity::class.java).also {
-                    it.putExtra(Constants.USER_DATA, user)
-                    startActivity(it)
+                if(currentUsedId == user?._id) {
+                    Intent(this, HomeActivity::class.java).also {
+                        it.putExtra(Constants.USER_DATA, user)
+                        it.putExtra(Constants.BLOG_DATA, blogs)
+                        startActivity(it)
+                        finish()
+                    }
+                }
+                else{
                     finish()
                 }
             }
@@ -113,10 +120,15 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        Intent(this, HomeActivity::class.java).also {
-            it.putExtra(Constants.USER_DATA, user)
-            it.putExtra(Constants.BLOG_DATA, blogs)
-            startActivity(it)
+        if(currentUsedId == user?._id) {
+            Intent(this, HomeActivity::class.java).also {
+                it.putExtra(Constants.USER_DATA, user)
+                it.putExtra(Constants.BLOG_DATA, blogs)
+                startActivity(it)
+                finish()
+            }
+        }
+        else{
             finish()
         }
     }

@@ -47,6 +47,7 @@
             android:text="Followers: 2" />
 
         <TextView
+            android:id="@+id/followButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/unfollow_bg"
