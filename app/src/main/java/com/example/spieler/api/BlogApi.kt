@@ -50,4 +50,8 @@ interface BlogApi {
         @Body updateUser: UpdateUser
     ): Response<UpdateUserResponse>
 
+    @GET("person")
+    suspend fun getAllUsers(): Response<AllUsers>
+
+
 }

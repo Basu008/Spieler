@@ -8,5 +8,7 @@ data class User(
     val last_name: String,
     val email: String,
     val password: String,
-    val profile_img: String
+    val profile_img: String,
+    val followers: ArrayList<Followers>,
+    val following: ArrayList<Following>
 ): Serializable

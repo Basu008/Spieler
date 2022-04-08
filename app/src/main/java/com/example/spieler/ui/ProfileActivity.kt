@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
@@ -22,6 +23,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
     var user: User? =  null
     var blogs: BlogResponseBody? = null
+    var currentUsedId: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +34,7 @@ class ProfileActivity : AppCompatActivity() {
         supportActionBar?.elevation = 0f
 
         user = intent.getSerializableExtra(Constants.USER_DATA) as User
+        currentUsedId = intent.getStringExtra(Constants.USER_ID)
         blogs = intent.getSerializableExtra(Constants.BLOG_DATA) as BlogResponseBody
 
         val uploads = blogs?.content?.filter { it.tag != "NEWS" && it.author_info._id == user?._id}
@@ -85,9 +88,15 @@ class ProfileActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
-                Intent(this, HomeActivity::class.java).also {
-                    it.putExtra(Constants.USER_DATA, user)
-                    startActivity(it)
+                if(currentUsedId == user?._id) {
+                    Intent(this, HomeActivity::class.java).also {
+                        it.putExtra(Constants.USER_DATA, user)
+                        it.putExtra(Constants.BLOG_DATA, blogs)
+                        startActivity(it)
+                        finish()
+                    }
+                }
+                else{
                     finish()
                 }
             }
@@ -104,15 +113,22 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.edit_menu, menu)
+        if(currentUsedId == user?._id){
+            menuInflater.inflate(R.menu.edit_menu, menu)
+        }
         return true
     }
 
     override fun onBackPressed() {
-        Intent(this, HomeActivity::class.java).also {
-            it.putExtra(Constants.USER_DATA, user)
-            it.putExtra(Constants.BLOG_DATA, blogs)
-            startActivity(it)
+        if(currentUsedId == user?._id) {
+            Intent(this, HomeActivity::class.java).also {
+                it.putExtra(Constants.USER_DATA, user)
+                it.putExtra(Constants.BLOG_DATA, blogs)
+                startActivity(it)
+                finish()
+            }
+        }
+        else{
             finish()
         }
     }
