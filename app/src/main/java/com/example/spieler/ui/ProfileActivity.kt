@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.example.spieler.R
@@ -17,13 +18,20 @@ import com.example.spieler.adapter.OwnUploadsAdapter
 import com.example.spieler.databinding.ActivityProfileBinding
 import com.example.spieler.model.BlogResponseBody
 import com.example.spieler.model.User
+import com.example.spieler.repository.Repository
 import com.example.spieler.util.Constants
+import com.example.spieler.viewmodel.EditProfileViewModel
+import com.example.spieler.viewmodelfactory.EditProfileViewModelFactory
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
+    private lateinit var viewModel: EditProfileViewModel
+    private lateinit var viewModelFactory: EditProfileViewModelFactory
+
     var user: User? =  null
     var blogs: BlogResponseBody? = null
     var currentUsedId: String? = null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +45,14 @@ class ProfileActivity : AppCompatActivity() {
         currentUsedId = intent.getStringExtra(Constants.USER_ID)
         blogs = intent.getSerializableExtra(Constants.BLOG_DATA) as BlogResponseBody
 
+        val repository = Repository()
+        viewModelFactory = EditProfileViewModelFactory(repository)
+        viewModel = ViewModelProvider(this, viewModelFactory)[
+                EditProfileViewModel::class.java
+        ]
+
+        viewModel.getAllFollowers()
+
         val uploads = blogs?.content?.filter { it.tag != "NEWS" && it.author_info._id == user?._id}
         val ownBlogs = uploads?.filter { it.tag == "BLOG" }
         val ownPosts = uploads?.filter { it.tag == "POST" }
@@ -45,8 +61,15 @@ class ProfileActivity : AppCompatActivity() {
         val email = user?.email
         val profilePic = user?.profile_img
         val adapter = OwnUploadsAdapter(user!!)
-        val followers = user?.followers?.size.toString()
-        val following = user?.following?.size.toString()
+        viewModel.allFollowers.observe(this){
+            if(it.isSuccessful){
+                val followers = it.body()?.content?.filter { followData ->  followData.following_id == user?._id }?.size.toString()
+                val following = it.body()?.content?.filter { followData ->  followData.user_id == user?._id }?.size.toString()
+                binding.followersCount.text = if(followers != "null") followers else "0"
+                binding.followingCount.text = if(following != "null") following else "0"
+            }
+        }
+
 
         setPostsTab()
         adapter.submitList(ownPosts)
@@ -62,8 +85,6 @@ class ProfileActivity : AppCompatActivity() {
             .placeholder(R.drawable.user)
             .into(binding.profileDp)
         binding.uploadsCount.text = uploads?.size.toString()
-        binding.followersCount.text = if(followers != "null") followers else "0"
-        binding.followingCount.text = if(following != "null") following else "0"
         binding.postOptionHeading.setOnClickListener {
             setPostsTab()
             adapter.submitList(ownPosts)

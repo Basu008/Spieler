@@ -56,4 +56,7 @@ interface BlogApi {
     @POST("follower")
     suspend fun followUser(
         @Body followRequestBody: FollowRequestBody)
+
+    @GET("followers")
+    suspend fun getAllFollowers(): Response<FollowingDataSet>
 }

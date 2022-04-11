@@ -50,4 +50,8 @@ class Repository {
     suspend fun followUser(followRequestBody: FollowRequestBody){
         RetrofitInstance.api.followUser(followRequestBody)
     }
+
+    suspend fun getAllFollowers(): Response<FollowingDataSet>{
+        return RetrofitInstance.api.getAllFollowers()
+    }
 }

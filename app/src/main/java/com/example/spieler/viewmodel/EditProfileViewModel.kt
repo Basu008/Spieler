@@ -5,10 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.spieler.model.SignUpRequestBody
-import com.example.spieler.model.SignUpResponseBody
-import com.example.spieler.model.UpdateUser
-import com.example.spieler.model.UpdateUserResponse
+import com.example.spieler.model.*
 import com.example.spieler.repository.Repository
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -34,6 +31,18 @@ class EditProfileViewModel(private val repository: Repository): ViewModel() {
     private val _getUpdatedUser = MutableLiveData<Response<SignUpResponseBody>>()
     val getUpdatedUser: LiveData<Response<SignUpResponseBody>>
         get() = _getUpdatedUser
+
+    private val _allFollowers = MutableLiveData<Response<FollowingDataSet>>()
+    val allFollowers: LiveData<Response<FollowingDataSet>>
+        get() = _allFollowers
+
+
+    fun getAllFollowers(){
+        viewModelScope.launch {
+            val response = repository.getAllFollowers()
+            _allFollowers.value = response
+        }
+    }
 
     fun uploadImageToFirebase(uri: Uri?, fileName: String
                               , firstName: String,

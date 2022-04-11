@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.spieler.model.AllUsers
+import com.example.spieler.model.FollowingDataSet
 import com.example.spieler.model.SignUpResponseBody
 import com.example.spieler.repository.Repository
 import kotlinx.coroutines.launch
