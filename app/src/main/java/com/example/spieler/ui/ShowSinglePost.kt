@@ -46,7 +46,7 @@ class ShowSinglePost : AppCompatActivity() {
         viewModel.updatedBlog.observe(this){post ->
             binding.postUsername.text = post.author_info.first_name
             binding.postCaption.text = post.description
-            binding.postCreationDate.text = post.created_at
+            binding.postCreationDate.text = post.time
             Glide.with(this)
                 .load(post.author_info.profile_img)
                 .into(binding.postProfilePic)

@@ -81,9 +81,8 @@ class AddBlogActivity : AppCompatActivity() {
                         title, body, userId, "BLOG")
                 }
                 else{
-                    val postBlogBody = PostBlogBody(
-                        title, body, userId, Constants.DEFAULT_PIC, "BLOG")
-                    viewModel.postBlog(postBlogBody)
+                    dialog.dismiss()
+                    Toast.makeText(this, "Blog can't be created, select a image first!",Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -96,6 +95,7 @@ class AddBlogActivity : AppCompatActivity() {
                 finish()
             }
             else{
+                dialog.dismiss()
                 Toast.makeText(this, it.message(), Toast.LENGTH_SHORT).show()
             }
         }

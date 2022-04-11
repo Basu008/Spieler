@@ -34,7 +34,7 @@ class BlogAdapter(val user: User) : ListAdapter<Blog, BlogAdapter.BlogViewHolder
             if(blog.author_info != null){
                 binding.blogAuthor.text = blog.author_info.first_name
             }
-            binding.blogDate.text = blog.created_at
+            binding.blogDate.text = blog.time
             binding.blogLayout.setOnClickListener {
                 Intent(context, ShowSingleBlog::class.java).also {
                     it.putExtra(Constants.BLOG_ID, blog._id)

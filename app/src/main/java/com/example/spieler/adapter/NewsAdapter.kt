@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.spieler.databinding.NewsItemBinding
 import com.example.spieler.model.Blog
-import com.example.spieler.ui.ShowSingleBlog
 import com.example.spieler.ui.ShowSingleNews
 import com.example.spieler.util.Constants
 
@@ -20,7 +19,7 @@ class NewsAdapter: ListAdapter<Blog, NewsAdapter.NewsViewHolder>(NewsDiffUtil())
             val context = binding.newsLayout.context
             binding.newsBody.text = blog.description
             binding.newsHeading.text = blog.title
-            binding.newsDate.text = blog.created_at
+            binding.newsDate.text = blog.time
             Glide.with(context)
                 .load(blog.blog_img)
                 .into(binding.newsImage)

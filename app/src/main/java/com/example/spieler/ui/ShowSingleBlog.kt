@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.spieler.R
 import com.example.spieler.databinding.ActivityShowSingleBlogBinding
-import com.example.spieler.model.Blog
 import com.example.spieler.model.DeleteLikeRequestBody
 import com.example.spieler.model.LikeRequestBody
 import com.example.spieler.repository.Repository
@@ -67,7 +66,7 @@ class ShowSingleBlog : AppCompatActivity() {
 
             binding.singleBlogAuthor.text = author
             binding.blogViewBody.text = blog.description
-            binding.blogCreationDate.text = blog.created_at
+            binding.blogCreationDate.text = blog.time
         }
 
 

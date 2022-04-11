@@ -2,7 +2,6 @@ package com.example.spieler.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.SyncStateContract
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.example.spieler.R
@@ -22,7 +21,7 @@ class ShowSingleNews : AppCompatActivity() {
 
         binding.newsViewHeading.text = blog.title
         binding.newsViewBody.text = blog.description
-        binding.newsCreationDate.text = blog.created_at
+        binding.newsCreationDate.text = blog.time
         Glide.with(this)
             .load(blog.blog_img)
             .into(binding.singleNewsImage)

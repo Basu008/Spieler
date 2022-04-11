@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.spieler.R
 import com.example.spieler.adapter.NewsAdapter
@@ -27,7 +26,7 @@ class NewsActivity : AppCompatActivity() {
         val blogResponse = intent.getSerializableExtra(Constants.BLOG_DATA) as BlogResponseBody
         val user = intent.getSerializableExtra(Constants.USER_DATA) as User
         val newsList = blogResponse.content.filter { it.tag == "NEWS" }
-            .sortedByDescending { it.created_at }
+            .sortedByDescending { it.time }
         val gamesNews = newsList.filter { it.category == "Games"}
         val eSportsNews = newsList.filter { it.category == "Esports"}
         val tournamentNews = newsList.filter { it.category == "Tournament"}

@@ -133,7 +133,7 @@ class HomeActivity : AppCompatActivity() {
                 allUsersIntent.putExtra(Constants.BLOG_DATA, response.body())
                 val blogAdapter = BlogAdapter(user!!)
                 val postsAdapter = PostsAdapter(user!!)
-                val blogs = response.body()?.content?.sortedByDescending { it.created_at }!!
+                val blogs = response.body()?.content?.reversed()!!
                 blogAdapter.submitList(blogs.filter { it.tag == "BLOG" })
                 postsAdapter.submitList(blogs.filter { it.tag == "POST" })
                 news = blogs.filter { it.tag == "NEWS" }

@@ -7,7 +7,7 @@ data class Blog(
     val author_info: AuthorInfo,
     val blog_img: String?,
     val comment: ArrayList<Comment>,
-    val created_at: String,
+    val time: String,
     val description: String,
     val tag: String,
     val category: String,

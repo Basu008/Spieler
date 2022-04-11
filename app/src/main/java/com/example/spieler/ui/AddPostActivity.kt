@@ -79,8 +79,8 @@ class AddPostActivity : AppCompatActivity() {
                         "title", caption, userId, "POST")
                 }
                 else{
-                    val postBlogBody = PostBlogBody("title", caption, userId, Constants.DEFAULT_PIC, "POST")
-                    viewModel.postBlog(postBlogBody)
+                    dialog.dismiss()
+                    Toast.makeText(this, "Select an image", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -89,13 +89,14 @@ class AddPostActivity : AppCompatActivity() {
         viewModel.postBlogResponse.observe(this){
             if(it.isSuccessful){
                 dialog.dismiss()
-                Toast.makeText(this, "Blog created", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Post created", Toast.LENGTH_SHORT).show()
                 Intent(this, HomeActivity::class.java).also {intent ->
                     intent.putExtra(Constants.USER_DATA, user)
                     startActivity(intent)
                 }
             }
             else{
+                dialog.dismiss()
                 Toast.makeText(this, it.message(), Toast.LENGTH_SHORT).show()
             }
         }
