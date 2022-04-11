@@ -43,7 +43,7 @@
             android:id="@+id/profile_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:text="basu.singh05@gmail.com"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="@+id/profile_dp"
@@ -54,22 +54,22 @@
             android:id="@+id/listCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
             android:orientation="horizontal"
+            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_email">
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
             <TextView
                 android:id="@+id/postOptionHeading"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/segoeui"
-                android:textAlignment="center"
-                android:padding="5dp"
+                android:layout_weight="1"
                 android:background="@drawable/profile_heading_bg"
+                android:fontFamily="@font/segoeui"
+                android:padding="5dp"
                 android:text="Posts"
+                android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -79,13 +79,13 @@
             <TextView
                 android:id="@+id/blogOptionHeading"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/profile_heading_bg"
                 android:fontFamily="@font/segoeui"
-                android:textAlignment="center"
                 android:padding="5dp"
                 android:text="Blogs"
-                android:background="@drawable/profile_heading_bg"
+                android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -107,7 +107,92 @@
             tools:listitem="@layout/own_post_item_placeholder"
              />
 
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_email">
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Uploads"
+                    android:textAlignment="center"
+                    android:textColor="@color/main_theme_color"
+                    android:textSize="20sp"
+                    android:layout_marginEnd="5dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/uploadsCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="10"
+                    android:textAlignment="center"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Followers"
+                    android:textAlignment="center"
+                    android:textColor="@color/main_theme_color"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/followersCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="10"
+                    android:textAlignment="center"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Following"
+                    android:textAlignment="center"
+                    android:textColor="@color/main_theme_color"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/followingCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="10"
+                    android:textAlignment="center"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

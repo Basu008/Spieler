@@ -59,7 +59,9 @@ class ProfileActivity : AppCompatActivity() {
             .circleCrop()
             .placeholder(R.drawable.user)
             .into(binding.profileDp)
-
+        binding.uploadsCount.text = uploads?.size.toString()
+        binding.followersCount.text = user?.followers?.toString() ?: "0"
+        binding.followingCount.text = user?.following?.toString() ?: "0"
         binding.postOptionHeading.setOnClickListener {
             setPostsTab()
             adapter.submitList(ownPosts)
