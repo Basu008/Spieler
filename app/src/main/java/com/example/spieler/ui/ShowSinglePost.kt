@@ -44,6 +44,13 @@ class ShowSinglePost : AppCompatActivity() {
 
         viewModel.updateBlog(blogId)
         viewModel.updatedBlog.observe(this){post ->
+            post.likes.forEach {
+                if(it.user_id == currentUserId){
+                    binding.postLikeBtn.setImageResource(R.drawable.liked_24)
+                    likeId = it._id
+                    blogNotLiked = false
+                }
+            }
             binding.postUsername.text = post.author_info.first_name
             binding.postCaption.text = post.description
             binding.postCreationDate.text = post.time
