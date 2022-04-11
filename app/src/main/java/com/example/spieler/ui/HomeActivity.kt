@@ -124,7 +124,14 @@ class HomeActivity : AppCompatActivity() {
         viewModelFactory = HomeViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
 
+        viewModel.getAllFollowers()
         viewModel.getAllBlogs()
+
+        viewModel.allFollowers.observe(this){ response ->
+            if(response.isSuccessful){
+                allUsersIntent.putExtra(Constants.ALL_FOLLOWERS, response.body())
+            }
+        }
 
         viewModel.allBlogs.observe(this){response ->
             if(response.isSuccessful){

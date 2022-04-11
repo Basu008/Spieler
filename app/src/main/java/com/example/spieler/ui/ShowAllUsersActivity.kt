@@ -10,6 +10,7 @@ import com.example.spieler.R
 import com.example.spieler.adapter.AllUsersAdapter
 import com.example.spieler.databinding.ActivityShowAllUsersBinding
 import com.example.spieler.model.BlogResponseBody
+import com.example.spieler.model.FollowingDataSet
 import com.example.spieler.repository.Repository
 import com.example.spieler.util.Constants
 import com.example.spieler.viewmodel.AllUsersViewModel
@@ -34,7 +35,8 @@ class ShowAllUsersActivity : AppCompatActivity() {
 
         val userId = intent.getStringExtra(Constants.USER_ID)
         val blogs = intent.getSerializableExtra(Constants.BLOG_DATA) as BlogResponseBody
-        val adapter = AllUsersAdapter(blogs, userId!!)
+        val followDataSet = intent.getSerializableExtra(Constants.ALL_FOLLOWERS) as FollowingDataSet
+        val adapter = AllUsersAdapter(blogs, userId!!, followDataSet)
         viewModel.getAllUsers()
 
         binding.allUserRV.adapter = adapter

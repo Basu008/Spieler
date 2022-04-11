@@ -47,11 +47,15 @@ class Repository {
         return RetrofitInstance.api.updateUser(id,updateUser)
     }
 
-    suspend fun followUser(followRequestBody: FollowRequestBody){
-        RetrofitInstance.api.followUser(followRequestBody)
+    suspend fun followUser(followRequestBody: FollowRequestBody): Response<FollowResponseBody>{
+        return RetrofitInstance.api.followUser(followRequestBody)
     }
 
     suspend fun getAllFollowers(): Response<FollowingDataSet>{
         return RetrofitInstance.api.getAllFollowers()
+    }
+
+    suspend fun unfollowUser(id: String, unfollowRequestBody: UnfollowRequestBody){
+        RetrofitInstance.api.unfollowUser(id, unfollowRequestBody)
     }
 }

@@ -7,6 +7,7 @@ import android.provider.SyncStateContract
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.startActivity
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -14,10 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.spieler.R
 import com.example.spieler.databinding.SingleUserItemBinding
-import com.example.spieler.model.BlogResponseBody
-import com.example.spieler.model.FollowRequestBody
-import com.example.spieler.model.Followers
-import com.example.spieler.model.User
+import com.example.spieler.model.*
 import com.example.spieler.repository.Repository
 import com.example.spieler.ui.ProfileActivity
 import com.example.spieler.util.Constants
@@ -27,11 +25,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class AllUsersAdapter(private val blogResponseBody: BlogResponseBody, private val currentUserId: String)
+class AllUsersAdapter(private val blogResponseBody: BlogResponseBody,
+                      private val currentUserId: String,
+                      private val followingDataSet: FollowingDataSet)
     :ListAdapter<User, AllUsersAdapter.AllUsersViewHolder>(AllUsersDiffUtil()){
 
     class AllUsersViewHolder(private val binding:SingleUserItemBinding): RecyclerView.ViewHolder(binding.root){
 
+        @SuppressLint("ResourceAsColor")
         private fun makeButtonFollow(){
             binding.followButton.setBackgroundResource(R.drawable.follow_bg)
             binding.followButton.setText("FOLLOW")
@@ -44,9 +45,11 @@ class AllUsersAdapter(private val blogResponseBody: BlogResponseBody, private va
             binding.followButton.setTextColor(Color.WHITE)
         }
 
-        @SuppressLint("ResourceAsColor")
-        fun bind(user: User, blogResponseBody: BlogResponseBody, currentUserId: String){
+        fun bind(user: User, blogResponseBody: BlogResponseBody, currentUserId: String, followingDataSet: FollowingDataSet){
             val repository = Repository()
+            var followId = MutableLiveData<List<FollowData>>()
+            if(followingDataSet.content.isNotEmpty())
+                followId.value = followingDataSet.content.filter { it.user_id == currentUserId && it.following_id == user._id }
             binding.otherUserUsername.text = user.first_name
             Glide.with(binding.root.context)
                 .load(user.profile_img)
@@ -69,15 +72,22 @@ class AllUsersAdapter(private val blogResponseBody: BlogResponseBody, private va
             }
             binding.followButton.setOnClickListener {
                 if(binding.followButton.text == "FOLLOW"){
-                    CoroutineScope(Dispatchers.IO).launch {
-                        repository.followUser(
+                    CoroutineScope(Dispatchers.Main).launch {
+                        val response = repository.followUser(
                             FollowRequestBody(currentUserId, user._id)
                         )
+                        followId.value = listOf(response.body()?.content!!)
                     }
                     makeButtonUnfollow()
                 }
                 else{
-
+                    CoroutineScope(Dispatchers.IO).launch {
+                        repository.unfollowUser(
+                            followId.value?.get(0)?._id!!,
+                            UnfollowRequestBody(user._id)
+                        )
+                    }
+                    makeButtonFollow()
                 }
             }
         }
@@ -108,6 +118,6 @@ class AllUsersAdapter(private val blogResponseBody: BlogResponseBody, private va
 
     override fun onBindViewHolder(holder: AllUsersViewHolder, position: Int) {
         val user = getItem(position)
-        holder.bind(user, blogResponseBody, currentUserId)
+        holder.bind(user, blogResponseBody, currentUserId, followingDataSet)
     }
 }

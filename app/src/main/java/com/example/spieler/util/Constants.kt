@@ -3,6 +3,7 @@ package com.example.spieler.util
 class Constants {
     companion object{
 
+        const val ALL_FOLLOWERS = "All followers"
         const val DEFAULT_PIC = "defaultPic"
 
         //url for retrofit api

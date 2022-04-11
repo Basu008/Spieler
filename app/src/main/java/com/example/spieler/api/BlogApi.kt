@@ -55,8 +55,15 @@ interface BlogApi {
 
     @POST("follower")
     suspend fun followUser(
-        @Body followRequestBody: FollowRequestBody)
+        @Body followRequestBody: FollowRequestBody
+    ): Response<FollowResponseBody>
 
     @GET("followers")
     suspend fun getAllFollowers(): Response<FollowingDataSet>
+
+    @HTTP(method = "DELETE", path = "/followers/dlt/{id}", hasBody = true)
+    suspend fun unfollowUser(
+        @Path("id") id: String,
+        @Body unfollowRequestBody: UnfollowRequestBody
+    )
 }
