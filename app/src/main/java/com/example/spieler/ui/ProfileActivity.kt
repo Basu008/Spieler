@@ -45,6 +45,8 @@ class ProfileActivity : AppCompatActivity() {
         val email = user?.email
         val profilePic = user?.profile_img
         val adapter = OwnUploadsAdapter(user!!)
+        val followers = user?.followers?.size.toString()
+        val following = user?.following?.size.toString()
 
         setPostsTab()
         adapter.submitList(ownPosts)
@@ -60,8 +62,8 @@ class ProfileActivity : AppCompatActivity() {
             .placeholder(R.drawable.user)
             .into(binding.profileDp)
         binding.uploadsCount.text = uploads?.size.toString()
-        binding.followersCount.text = user?.followers?.toString() ?: "0"
-        binding.followingCount.text = user?.following?.toString() ?: "0"
+        binding.followersCount.text = if(followers != "null") followers else "0"
+        binding.followingCount.text = if(following != "null") following else "0"
         binding.postOptionHeading.setOnClickListener {
             setPostsTab()
             adapter.submitList(ownPosts)

@@ -47,4 +47,7 @@ class Repository {
         return RetrofitInstance.api.updateUser(id,updateUser)
     }
 
+    suspend fun followUser(followRequestBody: FollowRequestBody){
+        RetrofitInstance.api.followUser(followRequestBody)
+    }
 }

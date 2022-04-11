@@ -11,7 +11,7 @@
         <entry key="..\:/Projects/Spieler2/app/src/main/res/layout/activity_edit_profile.xml" value="0.25416666666666665" />
         <entry key="..\:/Projects/Spieler2/app/src/main/res/layout/activity_home.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/Spieler2/app/src/main/res/layout/activity_main.xml" value="0.4" />
-        <entry key="..\:/Projects/Spieler2/app/src/main/res/layout/activity_profile.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/Spieler2/app/src/main/res/layout/activity_profile.xml" value="0.264" />
         <entry key="..\:/Projects/Spieler2/app/src/main/res/layout/activity_show_all_blogs.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/Spieler2/app/src/main/res/layout/activity_show_single_blog.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/Spieler2/app/src/main/res/layout/activity_splash_screen.xml" value="0.36666666666666664" />
@@ -22,6 +22,7 @@
         <entry key="..\:/Projects/Spieler2/app/src/main/res/layout/fragment_sign_up.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/Spieler2/app/src/main/res/layout/homepage_layout.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/Spieler2/app/src/main/res/layout/popular_blog_item_placeholder.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/Spieler2/app/src/main/res/layout/single_user_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Projects/Spieler2/app/src/main/res/menu/nav_drawer_menu.xml" value="0.36666666666666664" />
         <entry key="app/src/main/res/drawable-v24/add_blog_btn_bg.xml" value="0.1875" />
         <entry key="app/src/main/res/drawable-v24/edit.xml" value="0.2155" />
