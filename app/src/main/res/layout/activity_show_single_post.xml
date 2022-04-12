@@ -53,6 +53,7 @@
                     android:id="@+id/postImage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxHeight="450dp"
                     android:adjustViewBounds="true"
                     android:cropToPadding="true"
                     android:scaleType="fitXY"
