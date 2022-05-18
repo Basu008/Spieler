@@ -95,6 +95,7 @@ class EditProfileActivity : AppCompatActivity() {
             android.R.id.home -> {
                 Intent(this, ProfileActivity::class.java).also {
                     it.putExtra(Constants.USER_DATA, user)
+                    it.putExtra(Constants.USER_ID, user?._id)
                     it.putExtra(Constants.BLOG_DATA, blogs)
                     startActivity(it)
                     finish()
@@ -130,6 +131,7 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onBackPressed() {
         Intent(this, ProfileActivity::class.java).also {
             it.putExtra(Constants.USER_DATA, user)
+            it.putExtra(Constants.USER_ID, user?._id)
             it.putExtra(Constants.BLOG_DATA, blogs)
             startActivity(it)
             finish()

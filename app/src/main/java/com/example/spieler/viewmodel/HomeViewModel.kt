@@ -32,4 +32,8 @@ class HomeViewModel(private val repository: Repository): ViewModel(){
             _allFollowers.value = response
         }
     }
+
+    fun getCurrentUser(id: String){
+
+    }
 }
