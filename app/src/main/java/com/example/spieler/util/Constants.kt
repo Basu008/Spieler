@@ -7,7 +7,7 @@ class Constants {
         const val DEFAULT_PIC = "defaultPic"
 
         //url for retrofit api
-        const val BASE_URL = "http://15.206.128.93/"
+        const val BASE_URL = "http://35.154.206.0/"
 
         //type of blogs to be displayed
         const val NEWS_TITTLE = "News"
