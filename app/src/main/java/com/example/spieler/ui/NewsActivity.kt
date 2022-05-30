@@ -29,7 +29,7 @@ class NewsActivity : AppCompatActivity() {
             .sortedByDescending { it.time }
         val gamesNews = newsList.filter { it.category == "Games"}
         val eSportsNews = newsList.filter { it.category == "Esports"}
-        val tournamentNews = newsList.filter { it.category == "Tournament"}
+        val consolesNews = newsList.filter { it.category == "Consoles"}
         var activeList = listOf<Blog>()
 
         val adapter = NewsAdapter()
@@ -49,9 +49,9 @@ class NewsActivity : AppCompatActivity() {
                     activeList = eSportsNews
                     adapter.submitList(eSportsNews)
                 }
-                if(it == R.id.tournamentChip){
-                    activeList = tournamentNews
-                    adapter.submitList(tournamentNews)
+                if(it == R.id.consoleChip){
+                    activeList = consolesNews
+                    adapter.submitList(consolesNews)
                 }
             }
 

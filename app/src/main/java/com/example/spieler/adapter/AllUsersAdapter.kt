@@ -48,9 +48,12 @@ class AllUsersAdapter(private val blogResponseBody: BlogResponseBody,
         fun bind(user: User, blogResponseBody: BlogResponseBody, currentUserId: String, followingDataSet: FollowingDataSet){
             val repository = Repository()
             var followId = MutableLiveData<List<FollowData>>()
-            if(followingDataSet.content.isNotEmpty())
+            if(followingDataSet.content != null)
                 followId.value = followingDataSet.content.filter { it.user_id == currentUserId && it.following_id == user._id }
             binding.otherUserUsername.text = user.first_name
+            var followCount = user.followers.size
+            var followersCountText = "Followers : $followCount"
+            binding.otherUserFollowers.text = followersCountText
             Glide.with(binding.root.context)
                 .load(user.profile_img)
                 .circleCrop()
@@ -72,6 +75,9 @@ class AllUsersAdapter(private val blogResponseBody: BlogResponseBody,
             }
             binding.followButton.setOnClickListener {
                 if(binding.followButton.text == "FOLLOW"){
+                    followCount = user.followers.size + 1
+                    followersCountText = "Followers : $followCount"
+                    binding.otherUserFollowers.text = followersCountText
                     CoroutineScope(Dispatchers.Main).launch {
                         val response = repository.followUser(
                             FollowRequestBody(currentUserId, user._id)
@@ -81,6 +87,9 @@ class AllUsersAdapter(private val blogResponseBody: BlogResponseBody,
                     makeButtonUnfollow()
                 }
                 else{
+                    followCount = user.followers.size - 1
+                    followersCountText = "Followers : $followCount"
+                    binding.otherUserFollowers.text = followersCountText
                     CoroutineScope(Dispatchers.IO).launch {
                         repository.unfollowUser(
                             followId.value?.get(0)?._id!!,
