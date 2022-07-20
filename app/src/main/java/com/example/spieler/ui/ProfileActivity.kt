@@ -52,8 +52,7 @@ class ProfileActivity : AppCompatActivity() {
         ]
 
         viewModel.getAllFollowers()
-
-        val uploads = blogs?.content?.filter { it.tag != "NEWS" && it.author_info._id == user?._id}
+        val uploads = blogs?.content?.filter { it.tag != "NEWS" && it?.author_info?._id == user?._id}
         val ownBlogs = uploads?.filter { it.tag == "BLOG" }
         val ownPosts = uploads?.filter { it.tag == "POST" }
 

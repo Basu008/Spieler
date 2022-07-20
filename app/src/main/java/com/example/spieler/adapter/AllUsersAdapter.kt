@@ -75,7 +75,7 @@ class AllUsersAdapter(private val blogResponseBody: BlogResponseBody,
             }
             binding.followButton.setOnClickListener {
                 if(binding.followButton.text == "FOLLOW"){
-                    followCount = user.followers.size + 1
+                    followCount += 1
                     followersCountText = "Followers : $followCount"
                     binding.otherUserFollowers.text = followersCountText
                     CoroutineScope(Dispatchers.Main).launch {
@@ -87,7 +87,7 @@ class AllUsersAdapter(private val blogResponseBody: BlogResponseBody,
                     makeButtonUnfollow()
                 }
                 else{
-                    followCount = user.followers.size - 1
+                    followCount -= 1
                     followersCountText = "Followers : $followCount"
                     binding.otherUserFollowers.text = followersCountText
                     CoroutineScope(Dispatchers.IO).launch {
